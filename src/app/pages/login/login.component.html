@@ -22,10 +22,19 @@
             <input class="fadeIn third" type="text" name="password" [(ngModel)]="usuario.password" required minlength="6" placeholder="Password">
 
 
-            <button class="btn btn-primary fadeIn fourth">
+            <button class="btn btn-primary fadeIn fourth" type="submit">
                 ingresar
             </button>
         </form>
+
+        <hr>
+        <small class="align-content-center">or</small>
+        <hr>
+
+        <button class="btn btn-danger fadeIn fourth m-3" type="button" (click)="googleLogin()">
+            Ingresar con Google
+        </button>
+
 
         <!-- Remind Passowrd -->
         <div id="formFooter">

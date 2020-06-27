@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
     Swal.showLoading();
 
 
-    this.auth.login2( this.usuario.email, this.usuario.password ).then((resp) => {
+    this.auth.login( this.usuario ).then((resp) => {
       Swal.close();
     }).catch( err => {
       Swal.fire({
@@ -92,6 +92,29 @@ export class LoginComponent implements OnInit {
         text: err.code
       });
     });
+  }
+
+  googleLogin(){
+
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...'
+    });
+    Swal.showLoading();
+
+
+    this.auth.googleLogin().then((resp) => {
+      Swal.close();
+      console.log('Google Login: ',resp);
+    }).catch( err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al autenticar',
+        text: err.code
+      });
+    });
+
   }
 
 }

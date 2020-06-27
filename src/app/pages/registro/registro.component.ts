@@ -72,13 +72,9 @@ export class RegistroComponent implements OnInit {
 
     Swal.showLoading();
 
-    this.auth.register(this.usuario.email, this.usuario.password).then( (resp) => {
+    this.auth.register(this.usuario).then( (resp) => {
       Swal.close();
       console.log('respuesta ts: ', resp);
-      
-      // IMPLEMENTAR TABLA USERS
-
-
       }).catch( err => {
         console.log('ERROR', err);
         Swal.fire({
