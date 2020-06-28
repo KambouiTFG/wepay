@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { Auth2Service } from 'src/app/services/auth2.service';
-import { Observable, Subscription } from 'rxjs';
+// import { Auth2Service } from 'src/app/services/auth2.service';
+import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
 
@@ -14,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   sub1: Subscription;
-  constructor(private auth: Auth2Service) { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
     
