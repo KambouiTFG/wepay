@@ -43,8 +43,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
-  pruebas() {
-    this.auth.existe();
-  }
 
 }

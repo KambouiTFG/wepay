@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, throwError} from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -14,15 +14,12 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class Auth2Service {
-  private usersCollection: AngularFirestoreCollection<any>;
   public usuario: UsuarioModel;
   public userStatus = null;
 
-  public items: Observable<any[]>;
-
-
-
-  constructor(private afs: AngularFirestore, public  afAuth: AngularFireAuth, private router: Router) { 
+  constructor(private afs: AngularFirestore,
+              public  afAuth: AngularFireAuth,
+              private router: Router) {
 
     // UID del usuario con sesión activa
     this.afAuth.authState.subscribe(user => {
@@ -31,7 +28,7 @@ export class Auth2Service {
         this.userStatus = null;
       } else {
         this.userStatus = user.uid;
-        console.log('Estado del usuario',user.uid, user);
+        console.log('Estado del usuario', user.uid, user);
         this.router.navigateByUrl('/home');
       }
     });
@@ -58,36 +55,88 @@ export class Auth2Service {
 
 
   async googleLogin() {
-    await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then( (resp) => {
-      console.log('GOOGLE LOGIN RESP: ', resp);
-
-
-
-      const userGoogle: UsuarioModel = {
-        email: resp.user.email,
-        nombre: resp.user.displayName,
-        google: true,
-        img: resp.user.photoURL,
-      }
-
-      this.registarUser(userGoogle, true, resp.user.uid).catch( (e) => {
-        errorP.error = true;
-        errorP.msg = e;
-      });
-
-      console.log('enviar al método', userGoogle);
-      
-    }).catch( (e) => {
-
-    });
 
     let errorP = {
       error: false,
       msg: '',
     };
 
-    return new Promise((resolve, reject) => {
-      console.log('paso 1');
+    await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then( (resp) => {
+      console.log('GOOGLE LOGIN RESP: ', resp);
+      
+
+
+      this.afs.collection('users').doc(resp.user.uid).get().forEach(data => {
+        console.log('[existe] hay datos');
+        const userGoogle: UsuarioModel = {
+          email: resp.user.email,
+          nombre: resp.user.displayName,
+          google: true,
+          img: resp.user.photoURL,
+        }
+        
+        if (!data.data()) {
+          console.log('estamos false en e if');
+
+          // CREAMOS EL USUARIO
+
+          
+          this.registarUser(userGoogle, resp.user.uid).catch( (e) => {
+            errorP.error = true;
+            errorP.msg = e;
+          });
+          
+          console.log('enviar al método', userGoogle);
+
+        } else {
+
+          console.log('estamos true en e if');
+          if( data.data().google ){
+            console.log('google esta a true, no hacemos nada');
+
+          } else {
+            console.log('google esta a false, lo cambiamos ');
+            delete userGoogle.nombre;
+            this.afs.collection('users').doc(resp.user.uid).update(
+              /* google: true,
+              img: userGoogle.img */
+              userGoogle
+            ).then(() => {
+              console.log('exito');
+            }).catch((e) => {
+              console.log('fracaso');
+            })
+
+          }
+
+
+        }
+      });
+      /*const userGoogle: UsuarioModel = {
+        email: resp.user.email,
+        nombre: resp.user.displayName,
+        google: true,
+        img: resp.user.photoURL,
+      }
+      this.existe(resp.user.uid)
+      this.registarUser(userGoogle, true, resp.user.uid).catch( (e) => {
+        errorP.error = true;
+        errorP.msg = e;
+      });
+      console.log('enviar al método', userGoogle); */
+    }).catch( (e) => {
+      errorP.error = true;
+      errorP.msg = e;
+    });
+
+    /* let errorP = {
+      error: false,
+      msg: '',
+    }; */
+
+    return this.promesas(errorP);
+
+    /* return new Promise((resolve, reject) => {
       if(!errorP.error){
         console.log('exito promise');
         resolve('exito');
@@ -95,7 +144,7 @@ export class Auth2Service {
         console.log('error promise');
         reject(errorP.msg);
       }
-    })
+    }) */
   }
 
    
@@ -103,7 +152,9 @@ export class Auth2Service {
    return await this.afAuth.auth.signInWithEmailAndPassword(loginUser.email, loginUser.password);
   }
 
-   async register( usuario: UsuarioModel){
+  
+  async register( usuario: UsuarioModel){
+
     let errorP = {
       error: false,
       msg: '',
@@ -112,14 +163,12 @@ export class Auth2Service {
     await this.afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.password).then( (resp)=> {
       console.log('salio bien dentro ', resp);
       // Crear usuario tabla users
-      console.log('llamamos al metodo');
       usuario.google = false;
       usuario.img = 'none';
-      this.registarUser(usuario, false, resp.user.uid).catch( (e) => {
+      this.registarUser(usuario, resp.user.uid).catch( (e) => {
         errorP.error = true;
         errorP.msg = e;
       });
-      console.log('salio del metodo');
 
       /* let nuevoUser = {
         nombre: usuario.nombre,
@@ -144,9 +193,21 @@ export class Auth2Service {
       errorP.msg = e;
     });
 
-    console.log('cojone', errorP);
+    return this.promesas(errorP);
+
+    /* return new Promise((resolve, reject) => {
+      if(!errorP.error){
+        console.log('exito promise');
+        resolve('exito');
+      } else {
+        console.log('error promise');
+        reject(errorP.msg);
+      }
+    }) */
+  }
+
+  promesas(errorP) {
     return new Promise((resolve, reject) => {
-      console.log('paso 1');
       if(!errorP.error){
         console.log('exito promise');
         resolve('exito');
@@ -162,8 +223,8 @@ export class Auth2Service {
     await this.afAuth.auth.signOut();
   }
 
-  private async registarUser( usuario: UsuarioModel, google: boolean, uid: string ){
-    console.log('estamos en el metodo');
+  private async registarUser( usuario: UsuarioModel, uid: string ){
+    console.log('Registrando usuario...');
     let nuevoUser: UsuarioModel;
 
     nuevoUser = {
@@ -171,43 +232,16 @@ export class Auth2Service {
     };
     delete nuevoUser.password;
 
-    console.log('llamamos');
-    //await this.afs.collection('users').add(nuevoUser).
-    await this.afs.collection('users').doc(uid).set(nuevoUser).then( resp => {
+    await this.afs.collection('users').doc(uid).set(nuevoUser).then( () => {
       console.log('### Usuario creado ####');
-      console.log('nuevo usuario: ', nuevoUser, resp );
+      console.log(nuevoUser);
     }).catch( (err) => {
       console.log('salio mal crear user ', err);
     });
-    console.log('AAAAA');
   }
-
-
+  
   cargarUsuarios(){
-    return this.items = this.afs.collection('users').valueChanges({ idField: 'propertyId'});
+    return this.afs.collection('users').valueChanges({ idField: 'propertyId'});
 
   }
-
-  existe(){
-    // Create a reference to the cities collection
-
-// Create a query against the collection
-    /* var query = citiesRef.ref.where('email', '==', 'amin@amin.es')
-    .get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-          console.log(doc.id, ' => ', doc.data());
-      });
-  }); */
-
-    this.afs.collection('users').ref.where('google','==', false)
-      .onSnapshot( snap => {
-        snap.forEach(data => {
-          console.log('datos: ', data.data());
-        });
-      });
-  }
-
-
-  
-  
 }
