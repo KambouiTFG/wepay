@@ -1,2 +1,4 @@
-<router-outlet>
-</router-outlet>
+<app-navbar *ngIf="auth.userStatus"></app-navbar>
+<div class="m-5">
+    <router-outlet></router-outlet>
+</div>

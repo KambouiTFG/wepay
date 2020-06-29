@@ -19,10 +19,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 
 // Servicios
-import { Auth2Service } from './services/auth2.service';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+
 
 // Otros
 import { environment } from '../environments/environment';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { SalaComponent } from './pages/sala/sala.component';
 
 
 @NgModule({
@@ -30,7 +35,10 @@ import { environment } from '../environments/environment';
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegistroComponent
+    RegistroComponent,
+    NavbarComponent,
+    PerfilComponent,
+    SalaComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +51,8 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule
   ],
   providers: [
-    Auth2Service
+    AuthService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
