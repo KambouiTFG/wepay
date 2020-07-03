@@ -24,12 +24,12 @@ export class Auth2Service {
     // UID del usuario con sesión activa
     this.afAuth.authState.subscribe(user => {
       if (!user) {
-        console.log('Estado del usuario', user);
-        this.userStatus = null;
+/*         console.log('Estado del usuario', user);
+ */        this.userStatus = null;
       } else {
         this.userStatus = user.uid;
-        console.log('Estado del usuario', user.uid, user);
-        this.router.navigateByUrl('/home');
+/*         console.log('Estado del usuario', user.uid, user);
+ */        this.router.navigateByUrl('/home');
       }
     });
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private route: Router) { }
 
   ngOnInit() {
   }
@@ -21,10 +22,11 @@ export class NavbarComponent implements OnInit {
       text: 'Hasta luego'
     });
     Swal.showLoading();
+    this.route.navigateByUrl('/login');
     this.auth.logout();
     setTimeout( () => {
       location.reload();
       Swal.close();
-    }, 800);
+    }, 300);
   }
 }

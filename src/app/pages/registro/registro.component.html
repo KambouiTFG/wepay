@@ -9,7 +9,7 @@
 
         <!-- Icon -->
         <div class="fadeIn first">
-            <img src="../../../assets/logo_wePay.svg" id="icon" alt="User Icon" />
+            <img src="../../../assets/img/logo_wePay.svg" id="icon" alt="User Icon" />
         </div>
 
         <!-- Login Form -->
@@ -19,7 +19,7 @@
             <input class="fadeIn second" type="text" name="email" [(ngModel)]="usuario.email" required email placeholder="Email">
 
             <span *ngIf="rF.submitted && rF.controls['nombre'].errors" class="text-danger animated fadeIn">El nombre es obligatorio</span>
-            <input class="fadeIn thrid" type="text" name="nombre" [(ngModel)]="usuario.nombre" required minlength="2" placeholder="Nombre y apellidos">
+            <input class="fadeIn thrid" type="text" name="nombre" [(ngModel)]="usuario.nombre" required minlength="2" placeholder="Nombre">
 
             <span *ngIf="rF.submitted && rF.controls['password'].errors" class="text-danger animated fadeIn">La contraseña debe de ser más de 6 letras</span>
             <input class="fadeIn fourth" type="text" name="password" [(ngModel)]="usuario.password" required minlength="6" placeholder="Password">

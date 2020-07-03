@@ -1,0 +1,9 @@
+.img-thumb {
+    width: 50px;
+    height: 50px;
+}
+
+.img-circle {
+    border-radius: 100%;
+    width: 150px;
+}

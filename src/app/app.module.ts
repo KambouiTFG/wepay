@@ -28,6 +28,7 @@ import { environment } from '../environments/environment';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { SalaComponent } from './pages/sala/sala.component';
+import { NoimagePipe } from './pipes/noimage.pipe';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SalaComponent } from './pages/sala/sala.component';
     RegistroComponent,
     NavbarComponent,
     PerfilComponent,
-    SalaComponent
+    SalaComponent,
+    NoimagePipe
   ],
   imports: [
     BrowserModule,

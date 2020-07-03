@@ -3,9 +3,11 @@
 export class UsuarioModel {
 
     email: string;
+    img =  '';
+    google = false;
     password?: string;
     nombre?: string;
-    img =  'none';
-    google = false;
+    creado? = new Date().getTime();
+    cambioNombre? = new Date().getTime();
 }
 

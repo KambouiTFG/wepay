@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { UsuarioModel } from 'src/app/models/usuario.model';
@@ -9,15 +9,16 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import 'firebase/auth';
+import { Observable } from 'rxjs';
 
-import { map } from 'rxjs/operators';
+//import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  public usuario: UsuarioModel;
+  //public usuario: UsuarioModel;
   public userStatus = null;
 
   constructor(private afs: AngularFirestore,
@@ -37,14 +38,15 @@ export class AuthService {
     });
   }
 
-  public get users(): Observable<any> {
-    return this.afs.collection('users').valueChanges({ idField: 'propertyId' });
-  }
 
-  getUserByEmail(email) {
+ /*  public get users(): Observable<any> {
+    return this.afs.collection('users').valueChanges({ idField: 'propertyId' });
+  } */
+
+/*   getUserByEmail(email) {
     const userr = this.users.pipe(map( users => users.find(user => user.email === email)));
     // console.log('Se obtiene: ', userr);
-  }
+  } */
 
   async googleLogin() {
 
@@ -63,6 +65,8 @@ export class AuthService {
           nombre: resp.user.displayName,
           google: true,
           img: resp.user.photoURL,
+          creado: new Date().getTime(),
+          cambioNombre: new Date().getTime()
         }
         if (!data.data()) {
           // CREAMOS EL USUARIO
