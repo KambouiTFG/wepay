@@ -69,6 +69,7 @@ export class Auth2Service {
       this.afs.collection('users').doc(resp.user.uid).get().forEach(data => {
         console.log('[existe] hay datos');
         const userGoogle: UsuarioModel = {
+          role: 2,
           email: resp.user.email,
           nombre: resp.user.displayName,
           google: true,

@@ -9,7 +9,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import 'firebase/auth';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 
 //import { map } from 'rxjs/operators';
 
@@ -20,6 +20,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   //public usuario: UsuarioModel;
   public userStatus = null;
+  public role = 0;
 
   constructor(private afs: AngularFirestore,
               public  afAuth: AngularFireAuth,
@@ -32,21 +33,13 @@ export class AuthService {
         this.userStatus = null;
       } else {
         this.userStatus = user.uid;
-        // console.log('Estado del usuario', user.uid, user);
+        console.log('Estado del usuario', user.uid, user);
         this.router.navigateByUrl('/home');
+        this.getRoleByUID();
+
       }
     });
   }
-
-
- /*  public get users(): Observable<any> {
-    return this.afs.collection('users').valueChanges({ idField: 'propertyId' });
-  } */
-
-/*   getUserByEmail(email) {
-    const userr = this.users.pipe(map( users => users.find(user => user.email === email)));
-    // console.log('Se obtiene: ', userr);
-  } */
 
   async googleLogin() {
 
@@ -61,6 +54,7 @@ export class AuthService {
       this.afs.collection('users').doc(resp.user.uid).get().forEach(data => {
         // console.log('[existe] hay datos');
         const userGoogle: UsuarioModel = {
+          role: 2,
           email: resp.user.email,
           nombre: resp.user.displayName,
           google: true,
@@ -109,7 +103,7 @@ export class AuthService {
     };
 
     await this.afAuth.auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
-    .then( (resp)=> {
+    .then( (resp) => {
       // Crear usuario tabla users
       //usuario.google = false; [Viene por defecto en el model Usuario]
       //usuario.img = 'none';
@@ -130,6 +124,7 @@ export class AuthService {
 
   async logout() {
     this.userStatus = null;
+    this.role = 0;
     await this.afAuth.auth.signOut();
   }
 
@@ -158,6 +153,17 @@ export class AuthService {
         reject(errorP.msg);
       }
     })
+  }
+
+  getRoleByUID(uid?: string) {
+    // console.log('hay uid', uid);
+    if (!uid) {
+      uid = this.userStatus;
+      // console.log('dame uid', uid);
+    }
+    this.afs.collection('users').doc(uid).get().forEach(data => {
+      this.role = data.data().role;
+    });
   }
 
   cargarUsuarios() {

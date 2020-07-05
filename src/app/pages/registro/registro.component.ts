@@ -15,50 +15,15 @@ export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
   recordarme = false;
-  constructor(private auth: Auth2Service,
-              private router: Router) { }
+  constructor(private auth: AuthService) { }
 
 
 
   ngOnInit() {
 
     this.usuario = new UsuarioModel();
+    console.log('q coño', this.usuario);
   }
-
-  /* onSubmit( form: NgForm){
-
-    if (form.invalid) { return; }
-
-    Swal.fire({
-      allowOutsideClick: false,
-      icon: 'info',
-      text: 'Espere por favor...'
-    });
-
-    Swal.showLoading();
-
-    this.auth.nuevoUsuario( this.usuario)
-      .subscribe(resp => {
-        console.log(resp);
-        Swal.close();
-
-        if( localStorage.getItem('email')){
-          this.usuario.email = localStorage.getItem('email');
-          this.recordarme = true;
-        }
-
-        this.router.navigateByUrl('/home');
-      }, (err) => {
-
-        Swal.fire({
-          title: 'Error al autenticar',
-          icon: 'error',
-          text: err.error.error.message
-        });
-
-         console.log(err.error.error.message);
-      });
-  } */
 
   onSubmit( form: NgForm){
 

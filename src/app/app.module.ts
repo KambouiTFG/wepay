@@ -17,18 +17,26 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RegistroComponent } from './pages/registro/registro.component';
+import { NewproductComponent } from './components/newproduct/newproduct.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { BtnProductComponent } from './components/btn-product/btn-product.component';
+import { ProductosComponent } from './pages/productos/productos.component';
+import { ProductoComponent } from './pages/producto/producto.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { SalaComponent } from './pages/sala/sala.component';
+
 
 // Servicios
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
+// Pipes
+import { NoimagePipe } from './pipes/noimage.pipe';
 
 // Otros
 import { environment } from '../environments/environment';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { PerfilComponent } from './pages/perfil/perfil.component';
-import { SalaComponent } from './pages/sala/sala.component';
-import { NoimagePipe } from './pipes/noimage.pipe';
+
 
 
 @NgModule({
@@ -40,7 +48,12 @@ import { NoimagePipe } from './pipes/noimage.pipe';
     NavbarComponent,
     PerfilComponent,
     SalaComponent,
-    NoimagePipe
+    NoimagePipe,
+    NewproductComponent,
+    ProductListComponent,
+    BtnProductComponent,
+    ProductosComponent,
+    ProductoComponent
   ],
   imports: [
     BrowserModule,

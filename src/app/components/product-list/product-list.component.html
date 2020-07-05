@@ -1,0 +1,28 @@
+<div class="card-columns m-5 animated fadeIn">
+    <div class="card puntero" *ngFor="let product of products">
+        <img [src]="product.img | noimage" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{product.nombre}}</h5>
+            <p class="card-text">{{product.descripcion}}</p>
+            <div class="row">
+                <div class="col-sm-9 text-left">
+                    <app-btn-product [id]="product.propertyId" [producto]="product"></app-btn-product>
+                </div>
+                <div class="col-sm-2 text-right">
+                    <span class="badge badge-pill badge-primary">{{product.precio}} €</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- <div class="card-columns m-5 animated fadeIn">
+
+    <div *ngFor="let product of products" class="card puntero">
+        <img class="card-img-top" [src]="product.img | noimage" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{product.nombre}}</h5>
+        </div>
+    </div>
+</div> -->

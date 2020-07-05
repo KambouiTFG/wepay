@@ -19,8 +19,8 @@ export class UserService {
   nameChanger(uid: string, user: UsuarioModel) {
     this.afs.collection('users').doc(uid).update(
       user
-    ).then( (r) => {
-      console.log('éxito cambiando nombre', r);
+    ).then( () => {
+      console.log('éxito cambiando nombre');
     }).catch((e) => {
       console.log('error cambiando nombre: ', e);
     });
@@ -33,5 +33,16 @@ export class UserService {
 
   getUserByUID(uid: string) {
     return this.afs.collection('users').doc(uid).valueChanges();
+  }
+
+
+  compruebaFecha(lim: number): boolean {
+    const hoy = new Date();
+    const fechalim = new Date(lim);
+    if (hoy > fechalim) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

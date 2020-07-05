@@ -2,6 +2,7 @@
 
 export class UsuarioModel {
 
+    role = 2;
     email: string;
     img =  '';
     google = false;

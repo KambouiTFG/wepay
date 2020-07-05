@@ -27,7 +27,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
       this.misDatos = data;
       console.log('Mis datos', this.misDatos);
       this.loading = false;
-      this.compruebaFecha();
+      this.puedeCambiar = this._us.compruebaFecha(this.misDatos.cambioNombre);
     });
 
 
@@ -35,22 +35,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   }
 
-  compruebaFecha() {
-    const hoy = new Date();
-    const fechalim = new Date(this.misDatos.cambioNombre);
-
-    if (hoy > fechalim) {
-      console.log('puede cambiar nombre');
-      console.log('hoy ', hoy);
-      console.log('fechalim ', fechalim);
-      this.puedeCambiar = true;
-    } else {
-      console.log('no puede cambiar nombre');
-      console.log('hoy ', hoy);
-      console.log('fechalim ', fechalim);
-      this.puedeCambiar = false;
-    }
-  }
+  
 
   ngOnDestroy(): void {
     this.unSubscribe();
@@ -63,13 +48,9 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   cambiarNombre(d: boolean, name?: string) {
     this.cambioNombre = !this.cambioNombre;
-    if (!d) {
+    if (!d || !this.puedeCambiar) {
       return;
     }
-
-
-
-
     console.log('cambiando nombre... ', name);
     name = name.trim();
     if (name !== this.misDatos.nombre) {
@@ -80,10 +61,5 @@ export class PerfilComponent implements OnInit, OnDestroy {
       this.misDatos.nombre = name;
       this._us.nameChanger(this._auth.userStatus, this.misDatos);
     }
-
-
   }
-
-
-
 }
