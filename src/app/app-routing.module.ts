@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { SalaComponent } from './pages/sala/sala.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { AuthAdminGuard } from './guards/auth-admin.guard';
+import { ProductoComponent } from './pages/producto/producto.component';
 
 
 
@@ -17,7 +18,7 @@ const routes: Routes = [
   { path: 'home'    , component: HomeComponent, canActivate: [ AuthGuard ] },
   { path: 'me'    , component: PerfilComponent, canActivate: [ AuthGuard ] },
   { path: 'sala/:id'    , component: SalaComponent, canActivate: [ AuthGuard ] },
-  { path: 'producto/:id'    , component: ProductosComponent, canActivate: [ AuthAdminGuard ] },
+  { path: 'producto/:id'    , component: ProductoComponent },
   { path: 'productos'    , component: ProductosComponent, canActivate: [ AuthAdminGuard ] },
   { path: 'registro', component: RegistroComponent },
   { path: 'login'   , component: LoginComponent },

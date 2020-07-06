@@ -1,4 +1,6 @@
 <div class="container md-5">
+    <h2 *ngIf="newProduct">Nuevo producto</h2>
+    <h2 *ngIf="!newProduct">Actualizando producto</h2>
     <form (ngSubmit)="nuevoProducto( f )" #f="ngForm">
         <div class="form-group">
             <label for="nombreProducto">Nombre del producto <span class="text-danger">*</span></label>
@@ -33,8 +35,11 @@
 
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" *ngIf="newProduct">
             Crear producto
+        </button>
+        <button type="submit" class="btn btn-secondary" *ngIf="!newProduct">
+            Actualizar producto
         </button>
     </form>
 </div>

@@ -13,8 +13,10 @@ import { ProductoService } from '../../services/producto.service';
 })
 export class NewproductComponent implements OnInit {
   producto: ProductoModel;
+  newProduct: boolean;
 
   @Input() productoEdit: ProductoModel;
+  @Input() propertyId: string;
 
   constructor(private _ps: ProductoService) {
     
@@ -23,18 +25,17 @@ export class NewproductComponent implements OnInit {
   ngOnInit() {
     if (this.productoEdit === null) {
       this.producto = new ProductoModel();
+      this.newProduct = true;
     } else {
       this.producto = this.productoEdit;
+      this.newProduct = false;
     }
   }
 
   nuevoProducto(form: NgForm) {
-    console.log(this.producto);
     if (form.invalid) {
-      console.log('invalido ', this.producto);
       return;
     }
-    console.log('valido ', this.producto);
     Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
@@ -42,28 +43,22 @@ export class NewproductComponent implements OnInit {
     });
     Swal.showLoading();
 
-
-    this._ps.añadirProducto(this.producto).then( () => {
+    this._ps.dbProducto(this.producto, this.propertyId).then( () => {
       Swal.fire({
         icon: 'success',
-        title: 'Producto añadido correctamente',
+        title: 'Éxito'
       });
 
     }).catch( (e) => {
       Swal.fire({
         icon: 'error',
-        title: 'Error al añadir producto',
         text: e
       });
 
     });
-
-
     form.resetForm();
     let x = new ProductoModel();
     this.producto = x;
-    console.log(this.producto);
-
   }
 
 }

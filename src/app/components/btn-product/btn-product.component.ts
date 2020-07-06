@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ProductoModel } from '../../models/producto.model';
 import { ProductoService } from '../../services/producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-btn-product',
@@ -13,7 +14,8 @@ export class BtnProductComponent implements OnInit {
   @Input() id: string;
   @Input() producto: ProductoModel;
 
-  constructor(private _ps: ProductoService) { }
+  constructor(private _ps: ProductoService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -47,7 +49,7 @@ export class BtnProductComponent implements OnInit {
   }
 
   editar() {
-    
+    this.router.navigate(['/producto', this.id]);
   }
 
 }

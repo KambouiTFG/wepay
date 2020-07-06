@@ -1,1 +1,8 @@
-<p>producto works!</p>
+<div class="container">
+    <button class="btn btn-dark" (click)="backToProductList()">
+        Volver
+    </button>
+    <div class="m-5">
+        <app-newproduct [productoEdit]="productoOut" [propertyId]="id" *ngIf="isProduct"></app-newproduct>
+    </div>
+</div>

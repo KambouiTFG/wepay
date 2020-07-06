@@ -17,10 +17,43 @@ export class ProductoService {
   }
 
 
-  añadirProducto(newProduct: ProductoModel) {
+  dbProducto(newProduct: ProductoModel, id: string) {
     const product = { ...newProduct };
 
+    if (id === 'nuevo') {
+      return this.añadirProducto(product);
+    } else {
+      return this.actualizarProducto(product, id);
+    }
+
+   /*  this.afs.collection('products').add(product).catch( e => {
+      const error = {
+        state: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
+
+    return this.promesas(null); */
+
+  }
+
+  private añadirProducto(product) {
     this.afs.collection('products').add(product).catch( e => {
+      const error = {
+        state: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
+    return this.promesas(null);
+  }
+
+
+  private actualizarProducto(updProduct: ProductoModel, id: string) {
+    const product = { ...updProduct };
+
+    this.afs.collection('products').doc(id).update(updProduct).catch( e => {
       const error = {
         state: true,
         msg: e
@@ -41,6 +74,24 @@ export class ProductoService {
       return this.promesas(error);
     });
     return this.promesas(null);
+  }
+
+  getProducto(id: string) {
+    return this.afs.collection('products').doc(id).valueChanges();
+    /* .forEach(data => {
+      p = {
+        nombre: data.data().nombre,
+        precio: data.data().precio,
+        categoria: data.data().categoria,
+        img: data.data().img,
+        descripcion: data.data().descripcion
+      }
+    });
+    console.log('que data hay akaaaaaa', p);
+ 
+    return p;*/
+
+    
   }
 
   private promesas(error) {
