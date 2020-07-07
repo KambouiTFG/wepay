@@ -36,6 +36,8 @@ import { NoimagePipe } from './pipes/noimage.pipe';
 
 // Otros
 import { environment } from '../environments/environment';
+import { ProductsPipePipe } from './pipes/products-pipe.pipe';
+import { PCatPipePipe } from './pipes/p-cat-pipe.pipe';
 
 
 
@@ -53,7 +55,9 @@ import { environment } from '../environments/environment';
     ProductListComponent,
     BtnProductComponent,
     ProductosComponent,
-    ProductoComponent
+    ProductoComponent,
+    ProductsPipePipe,
+    PCatPipePipe
   ],
   imports: [
     BrowserModule,

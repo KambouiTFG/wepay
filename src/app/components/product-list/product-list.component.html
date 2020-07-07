@@ -1,22 +1,17 @@
-<form class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
-<div class="card-columns m-5 animated fadeIn">
-    <div class="card puntero" *ngFor="let product of products">
-        <img [src]="product.img | noimage" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{product.nombre}}</h5>
-            <p class="card-text">{{product.descripcion}}</p>
-            <div class="row">
-                <div class="col-sm-9 text-left">
-                    <app-btn-product [id]="product.propertyId" [producto]="product"></app-btn-product>
-                </div>
-                <div class="col-sm-2 text-right">
+<div class="row row-cols-1 row-cols-md-5 mt-5">
+    <div class="col mb-4 animated fadeIn" *ngFor="let product of products">
+        <div class="card">
+            <img [src]="product.img | noimage" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{product.nombre}}</h5>
+                <p class="card-text">{{product.descripcion}}</p>
+                <div class="text-center m-3">
                     <span class="badge badge-pill badge-primary">{{product.precio}} €</span>
                 </div>
+                <div class="text-center m-3">
+                    <app-btn-product [id]="product.propertyId" [producto]="product"></app-btn-product>
+                </div>
             </div>
-
         </div>
     </div>
 </div>

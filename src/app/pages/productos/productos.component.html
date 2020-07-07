@@ -1,7 +1,41 @@
 <div class="m-5">
-    <button class="btn btn-primary" (click)="nuevoProducto()">
-        Nuevo Producto
-    </button>
-    <app-product-list></app-product-list>
 
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="input-group">
+                <input #termino type="text" (keyup)="buscar(termino.value)" class="form-control" placeholder="Buscar usuario">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="text-right">
+                <button class="btn btn-primary btn-block" (click)="nuevoProducto()">
+                    <i class="fas fa-plus"></i> Nuevo producto
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-2">
+        <div class="mr-2">
+            <small>Mostrar categoria: </small>
+        </div>
+        <div>
+            <select name="categoriaProducto" class="form-control form-control-sm" [(ngModel)]="categoria" (change)="prueba()">
+                <option value="0">Comida</option>
+                <option value="1">Bebida</option>
+                <option value="2">Utensilio</option>
+                <option value="3">Transporte</option>
+                <option value="4">Otro</option>
+                <option value="5" selected>Todos</option>
+            </select>
+        </div>
+
+    </div>
+    <app-product-list [products]="allProducts | productsPipe:buscando:pTermino | pCatPipe:categoria" *ngIf="listar"></app-product-list>
 </div>
