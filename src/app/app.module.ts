@@ -24,8 +24,6 @@ import { ProductosComponent } from './pages/productos/productos.component';
 import { ProductoComponent } from './pages/producto/producto.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
-import { SalaComponent } from './pages/sala/sala.component';
-
 
 // Servicios
 import { AuthService } from './services/auth.service';
@@ -38,6 +36,10 @@ import { NoimagePipe } from './pipes/noimage.pipe';
 import { environment } from '../environments/environment';
 import { ProductsPipePipe } from './pipes/products-pipe.pipe';
 import { PCatPipePipe } from './pipes/p-cat-pipe.pipe';
+import { ProductoService } from './services/producto.service';
+import { SalaService } from './services/sala.service';
+import { SalaComponent } from './components/sala/sala.component';
+import { RowSalaComponent } from './components/row-sala/row-sala.component';
 
 
 
@@ -49,7 +51,6 @@ import { PCatPipePipe } from './pipes/p-cat-pipe.pipe';
     RegistroComponent,
     NavbarComponent,
     PerfilComponent,
-    SalaComponent,
     NoimagePipe,
     NewproductComponent,
     ProductListComponent,
@@ -57,8 +58,10 @@ import { PCatPipePipe } from './pipes/p-cat-pipe.pipe';
     ProductosComponent,
     ProductoComponent,
     ProductsPipePipe,
-    PCatPipePipe
-  ],
+    PCatPipePipe,
+    SalaComponent,
+    RowSalaComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -71,7 +74,9 @@ import { PCatPipePipe } from './pipes/p-cat-pipe.pipe';
   ],
   providers: [
     AuthService,
-    UserService
+    UserService,
+    ProductoService,
+    SalaService
   ],
   bootstrap: [AppComponent]
 })

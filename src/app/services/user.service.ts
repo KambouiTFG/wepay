@@ -3,14 +3,20 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UsuarioModel } from 'src/app/models/usuario.model';
+import * as firebase from 'firebase/app';
+import { AuthService } from './auth.service';
+import FieldValue = firebase.firestore.FieldValue;
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  myUid: string;
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore, private auth: AuthService) {
+    this.myUid = this.auth.userStatus;
+  }
 
   public get users(): Observable<any> {
     return this.afs.collection('users').valueChanges({ idField: 'propertyId' });
@@ -31,6 +37,11 @@ export class UserService {
     // console.log('Se obtiene: ', userr);
   }
 
+  getMyInfo() {
+    return this.afs.collection('users').doc(this.myUid).valueChanges();
+
+  }
+
   getUserByUID(uid: string) {
     return this.afs.collection('users').doc(uid).valueChanges();
   }
@@ -44,5 +55,51 @@ export class UserService {
     } else {
       return false;
     }
+  }
+
+  añadirSalaUser(uid: string, uidSala: string) {
+    this.afs.collection('users').doc(uid).update({
+      'salas' : FieldValue.arrayUnion(uidSala)
+    }).then( () => {
+      console.log('Sala añadida al usuario');
+    }).catch( e => {
+      console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
+    return this.promesas(null);
+  }
+
+  borrarSalaUser(uid: string, uidSala: string) {
+    this.afs.collection('users').doc(uid).update({
+      'salas' : FieldValue.arrayRemove(uidSala)
+    }).then( () => {
+      console.log('Sala borrada');
+    }).catch( e => {
+      console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
+    })
+
+    return this.promesas(null);
+
+  }
+
+  private promesas(error) {
+    return new Promise((resolve, reject) => {
+      if(error === null){
+        // console.log('exito promise');
+        resolve('exito');
+      } else {
+        // console.log('error promise');
+        reject(error.msg);
+      }
+    })
   }
 }

@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-sm-2" style="background-color: aqua;">
+        <h1 style="font-size: 1em;">lista de salas</h1>
+        <div *ngIf="loading">
+            <div class="row" *ngFor="let sala of myInfo.salas">
+                <app-row-sala [idSala]="sala"></app-row-sala>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-10">
+        <div *ngIf="loading">
+            <div class="text-center">
+                <h1>Selecciona una sala de la lista</h1>
+            </div>
+            <div class="text-center m-5">
+                <h2>Crear sala</h2>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <form (ngSubmit)="crearSala( f )" #f="ngForm" class="form-inline">
+                            <input type="text" class="form-control mr-2" name="creandoSala" [(ngModel)]="nombreSala" placeholder="Nombre de la nueva sala" required minlength="4">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-plus"></i> Crear sala
+                            </button>
+                        </form>
+                    </div>
+                    <div class="row justify-content-center">
+                        <span *ngIf="f.submitted && f.controls['creandoSala'].errors" class="text-danger animated fadeIn">Obligatorio nombre de sala de al menos 4 caracteres</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center m-5">
+                <h2>Unirse a sala</h2>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <form (ngSubmit)="buscarSala( r )" #r="ngForm" class="form-inline">
+                            <input type="text" class="form-control mr-2" name="buscandoSala" [(ngModel)]="codigoSala" placeholder="Código de Sala" required minlength="6">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i> Buscar sala
+                            </button>
+                        </form>
+                    </div>
+                    <div class="row justify-content-center">
+                        <span *ngIf="r.submitted && r.controls['buscandoSala'].errors" class="text-danger animated fadeIn">Obligatorio el código de 6 caracteres</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

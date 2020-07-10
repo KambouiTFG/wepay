@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 // import { Auth2Service } from 'src/app/services/auth2.service';
 import { Subscription } from 'rxjs';
+import { SalaService } from '../../services/sala.service';
 
 
 
@@ -12,13 +12,22 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   sub1: Subscription;
-  constructor(private auth: AuthService) { }
+  constructor(private _sala: SalaService) { }
 
   ngOnInit() {
 
   }
 
   ngOnDestroy() {
+
+  }
+
+  prueba() {
+    //this._sala.crearSala('primera sala', 'qwerty');
+  }
+
+  prueba2() {
+        //this._sala.borrarAdmin('lQXAuqWrlRKJcIJn6RvO', 'qwerty');
 
   }
 }
