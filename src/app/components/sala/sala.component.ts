@@ -80,4 +80,8 @@ export class SalaComponent implements OnInit {
       });
     }
   }
+
+  prueba(esto: string) {
+    console.log('sala escodiga: ', esto);
+  }
 }
