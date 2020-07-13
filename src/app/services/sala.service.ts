@@ -87,6 +87,10 @@ export class SalaService {
     return sala;
   }
 
+  getSala(idSala: string) {
+    return this.afs.collection('salas').doc(idSala).valueChanges();
+  }
+
 
   private promesas(error) {
     return new Promise((resolve, reject) => {

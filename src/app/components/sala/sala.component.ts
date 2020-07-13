@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './sala.component.html',
   styleUrls: ['./sala.component.css']
 })
+
 export class SalaComponent implements OnInit {
   loading = false;
   nombreSala = '';
@@ -20,6 +21,8 @@ export class SalaComponent implements OnInit {
   myInfo;
 
   sub1: Subscription;
+  sala: string;
+  haySala: boolean;
 
   constructor(private _sala: SalaService,
               private _us: UserService) { }
@@ -29,6 +32,7 @@ export class SalaComponent implements OnInit {
       this.myInfo = resp;
       console.log('mi info', this.myInfo);
       this.loading = true;
+      this.haySala = false;
     })
   }
 
@@ -83,5 +87,7 @@ export class SalaComponent implements OnInit {
 
   prueba(esto: string) {
     console.log('sala escodiga: ', esto);
+    this.sala = esto;
+    this.haySala = true;
   }
 }

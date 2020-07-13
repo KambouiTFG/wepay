@@ -1,5 +1,5 @@
-<div *ngIf="loading" class="text-center">
-    <div class="text-center">
+<div *ngIf="loading && !haySala" class="text-center">
+    <div>
         <h1>Selecciona una sala de la lista</h1>
     </div>
     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#prueba">
@@ -28,8 +28,8 @@
                 <form (ngSubmit)="buscarSala( r )" #r="ngForm" class="form-inline">
                     <input type="text" class="form-control mr-2" name="buscandoSala" [(ngModel)]="codigoSala" placeholder="Código de Sala" required minlength="6">
                     <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-search"></i> Buscar sala
-                            </button>
+                        <i class="fas fa-search"></i> Buscar sala
+                    </button>
                 </form>
             </div>
             <div class="row justify-content-center">
@@ -47,7 +47,7 @@
             </div>
             <div class="modal-body bg-light">
                 <div *ngFor="let sala of myInfo.salas">
-                    <div (click)="prueba(sala)" class="zoom ml-5 md-2" data-dismiss="modal">
+                    <div (click)="prueba(sala)" class="zoom pl-5 md-2" data-dismiss="modal">
                         <app-row-sala [idSala]="sala"></app-row-sala>
                     </div>
                 </div>
@@ -60,14 +60,6 @@
         </div>
     </div>
 </div>
-<div>
-    <div class="header-nav">
-        HOLA
-    </div>
-    <div class="body">
-
-    </div>
-    <div class="footer">
-        footer
-    </div>
+<div *ngIf="loading && haySala">
+    <app-body-sala [idSala]="sala"></app-body-sala>
 </div>

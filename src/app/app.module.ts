@@ -40,6 +40,8 @@ import { ProductoService } from './services/producto.service';
 import { SalaService } from './services/sala.service';
 import { SalaComponent } from './components/sala/sala.component';
 import { RowSalaComponent } from './components/row-sala/row-sala.component';
+import { BodySalaComponent } from './components/body-sala/body-sala.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 
@@ -60,7 +62,9 @@ import { RowSalaComponent } from './components/row-sala/row-sala.component';
     ProductsPipePipe,
     PCatPipePipe,
     SalaComponent,
-    RowSalaComponent
+    RowSalaComponent,
+    BodySalaComponent,
+    ChatComponent
     ],
   imports: [
     BrowserModule,
