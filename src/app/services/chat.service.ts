@@ -10,22 +10,22 @@ import { map } from 'rxjs/operators';
 })
 export class ChatService {
   public chats: Mensaje[] = [];
-  public usuario: any = {};
+  public userUid =  this.auth.userStatus;
 
   constructor(private afs: AngularFirestore, private auth: AuthService) { }
 
   agregarMensaje( texto: string, idSala: string) {
     const mensaje: Mensaje = {
       mensaje: texto,
-      uid: this.auth.userStatus,
+      uid: this.userUid,
       fecha: new Date().getTime()
     };
     console.log('nuevo mensaje: ', mensaje);
-    return this.afs.collection('chats').doc(idSala).collection('mensajes').add(mensaje);
+    return this.afs.collection('salas').doc(idSala).collection('mensajes').add(mensaje);
   }
 
   cargarMensajes(idSala: string) {
-    return this.afs.collection('chats').doc(idSala)
-    .collection<Mensaje>('mensajes', ref => ref.orderBy('fecha', 'desc').limit(100)).valueChanges();
+    return this.afs.collection('salas').doc(idSala)
+    .collection<Mensaje>('mensajes', ref => ref.orderBy('fecha', 'asc').limit(100)).valueChanges();
   }
 }

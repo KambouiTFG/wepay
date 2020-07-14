@@ -1,21 +1,30 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import * as firebase from 'firebase/app';
 import { AuthService } from './auth.service';
 import FieldValue = firebase.firestore.FieldValue;
+import { resolve } from 'url';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  myUid: string;
+  public myUid: string;
+  public nombre: string;
+  
+  usuarios;
+
 
   constructor(private afs: AngularFirestore, private auth: AuthService) {
     this.myUid = this.auth.userStatus;
+
+    this.users.subscribe( r => {
+      this.usuarios = r;
+    });
   }
 
   public get users(): Observable<any> {
@@ -89,6 +98,11 @@ export class UserService {
 
     return this.promesas(null);
 
+  }
+
+  getNameByUID(uid: string) {
+    const uuser: UsuarioModel = this.usuarios.find(user => user.propertyId === uid);
+    return uuser.nombre;
   }
 
   private promesas(error) {
