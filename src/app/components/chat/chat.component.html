@@ -1,12 +1,24 @@
-<h1>Chat</h1>
-<hr>
-<div class="app-mensajes" id="app-mensajes">
-    <div *ngFor="let chat of chats" [ngClass]="{'text-right': _chat.userUid === chat.uid}">
-        <span class="badge" [ngClass]="{'badge-primary': _chat.userUid == chat.uid, 
-                                        'badge-success': _chat.userUid != chat.uid}">{{nombreUser(chat.uid)}}</span>
-        <p>
-            {{ chat.mensaje }}
-        </p>
+<div class="chat-window" id="chat-window">
+    <h1>Chat</h1>
+    <hr>
+    <div class="app-mensajes" id="app-mensajes">
+        <div *ngFor="let chat of chats" [ngClass]="{'msg': _chat.userUid === chat.uid, 
+                                                    'msg-otro': _chat.userUid !== chat.uid}">
+            <span class="badge mx-2" [ngClass]="{'badge-primary': _chat.userUid == chat.uid, 
+                                            'badge-success': _chat.userUid != chat.uid}">
+                    {{nombreUser(chat.uid)}}
+                </span>
+            <!--             <div class="texto">
+ -->
+            <p>
+                {{ chat.mensaje }}
+            </p>
+            <!--             </div>
+ -->
+        </div>
+    </div>
+    <hr>
+    <div class="pl-2 pr-2">
+        <input type="text" class="form-control form-control-sm" id="mensaje" name="mensaje" [(ngModel)]="mensaje" maxlength="45" placeholder="Enviar mensaje" (keyup.enter)="enviarMensaje()">
     </div>
 </div>
-<input type="text" class="form-control" id="mensaje" name="mensaje" [(ngModel)]="mensaje" maxlength="50" placeholder="Enviar mensaje" (keyup.enter)="enviarMensaje()">

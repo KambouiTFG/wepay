@@ -35,3 +35,15 @@
         border-top-left-radius: 35px;
         border-top-right-radius: 35px;
     }
+    
+    .chat {
+        width: 50%;
+    }
+    
+    .participantes {
+        width: 30%;
+    }
+    
+    .sala-body {
+        background-color: whitesmoke;
+    }

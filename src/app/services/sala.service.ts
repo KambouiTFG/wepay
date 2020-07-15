@@ -14,6 +14,7 @@ import FieldValue = firebase.firestore.FieldValue;
 })
 export class SalaService {
   private uid: string;
+  private listaSalas: SalaModel[];
 
   constructor(private afs: AngularFirestore,
               private auth: AuthService,
@@ -21,7 +22,33 @@ export class SalaService {
     this.uid = this.auth.userStatus;
   }
 
-
+ /*  private get salas(): Observable<any> {
+    return this.afs.collection('salas').valueChanges({ idField: 'propertyId' });
+  } */
+// ----------------------------------------------------
+  codeSala(code: string) {
+    return new Promise( (resolve, reject) => {
+      this.afs.collection('salas').ref.where('code', '==', code).where('open', '==', true)
+      .onSnapshot(snap => {
+        if ( snap.empty) {
+          reject(null);
+        }
+        snap.forEach(r => {
+          console.log('a ver q ', r.data());
+          this.añadirUserSala(r.id, this.uid).then( () => {
+            this._us.añadirSalaUser(this.uid, r.id).then( () => {
+              resolve(r.id);
+            }).catch( e => {
+              reject(null);
+            });
+          }).catch(e => {
+            reject(null);
+          });
+        });
+      });
+    });
+  }
+// ----------------------------------------------------
   crearSala(nom: string) {
     const sala: SalaModel = {
       nombre : nom,
@@ -29,9 +56,10 @@ export class SalaService {
       usuarios : [this.uid],
       productos : [],
       img : '',
-      code: '',
+      code: Math.random().toString(36).substr(6, 9),
+      open: true,
       creado : new Date().getTime()
-    }
+    };
     console.log('izan', sala);
     this.afs.collection('salas').add(sala).then( (e) => {
 
@@ -54,7 +82,7 @@ export class SalaService {
     });
     return this.promesas(null);
   }
-
+// ----------------------------------------------------
   quitarAdmin(idSala: string, admin: string) {
     this.afs.collection('salas').doc(idSala).update({
       admins : FieldValue.arrayRemove(admin)
@@ -64,7 +92,7 @@ export class SalaService {
       console.log('puta hay un fallo', e);
     })
   }
-
+// ----------------------------------------------------
   añadirAdmin(idSala: string, admin: string) {
     this.afs.collection('salas').doc(idSala).update({
       admins : FieldValue.arrayUnion(admin)
@@ -74,7 +102,7 @@ export class SalaService {
       console.log('puta hay un fallo', e);
     })
   }
-
+// ----------------------------------------------------
   getIndexSala(idSala: string) {
     let sala = {
       nombre: '',
@@ -86,12 +114,30 @@ export class SalaService {
     });
     return sala;
   }
+// ----------------------------------------------------
 
   getSala(idSala: string) {
     return this.afs.collection('salas').doc(idSala).valueChanges();
   }
+// ----------------------------------------------------
 
+  añadirUserSala(idSala: string, idUser: string) {
+    this.afs.collection('salas').doc(idSala).update({
+      'usuarios' : FieldValue.arrayUnion(idUser)
+    }).then( () => {
+      console.log('Sala añadida al usuario');
+    }).catch( e => {
+      console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
+    return this.promesas(null);
+  }
 
+// ----------------------------------------------------
   private promesas(error) {
     return new Promise((resolve, reject) => {
       if(error === null){

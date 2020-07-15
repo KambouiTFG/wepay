@@ -11,6 +11,9 @@ export class BodySalaComponent implements OnInit {
   @Input() idSala;
   hayInfo;
   infoSala;
+
+  pp;
+
   constructor(private _sala: SalaService) { 
     this.hayInfo = false;
   }
@@ -22,6 +25,18 @@ export class BodySalaComponent implements OnInit {
       console.log('info de la sala: ', this.infoSala);
       this.hayInfo = true;
     });
+  }
+
+  prueba() {
+    /* this._sala.codeSala('sb3daw').then( r => {
+      console.log('then ', r);
+    }).catch( e => {
+      console.log(e);
+    }); */
+
+
+
+    //console.log(this._sala.codeSala('sb3daw'));
   }
 
 }

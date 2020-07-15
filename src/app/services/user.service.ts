@@ -27,7 +27,7 @@ export class UserService {
     });
   }
 
-  public get users(): Observable<any> {
+  private get users(): Observable<any> {
     return this.afs.collection('users').valueChanges({ idField: 'propertyId' });
   }
 

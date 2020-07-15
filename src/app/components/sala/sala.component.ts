@@ -57,7 +57,16 @@ export class SalaComponent implements OnInit {
 
     // To do
     this.swalFireLoading('Buscando');
-    Swal.close();
+
+
+    this._sala.codeSala(this.codigoSala).then( (r: string) => {
+      console.log('then ', r);
+      this.swalFire('buscar', true, 'Sala añadida a la lista');
+    }).catch( e => {
+      console.log(e);
+      this.swalFire('buscar', false, 'No se ha encontrado la sala');
+    });
+    //Swal.close();
     form.resetForm();
   }
 
@@ -75,6 +84,7 @@ export class SalaComponent implements OnInit {
       Swal.fire({
         title: `Exito al ${accion} sala.`,
         icon: 'success',
+        text: msg
       });
     } else {
       Swal.fire({
@@ -85,9 +95,8 @@ export class SalaComponent implements OnInit {
     }
   }
 
-  prueba(esto: string) {
-    console.log('sala escodiga: ', esto);
-    this.sala = esto;
+  salaEscogida(sala: string) {
+    this.sala = sala;
     this.haySala = true;
   }
 }

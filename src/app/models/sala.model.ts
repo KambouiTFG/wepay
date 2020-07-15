@@ -7,5 +7,6 @@ export class SalaModel {
     productos = [];
     img = '';
     code = '';
+    open = true;
     creado = new Date().getTime();
 }
