@@ -62,4 +62,14 @@
 </div>
 <div *ngIf="loading && haySala">
     <app-body-sala [idSala]="sala"></app-body-sala>
+    <div class="row sala-footer">
+        <div class="btns">
+            <button class="btn btn-dark btn-sm m-1" type="button" data-toggle="modal" data-target="#prueba">
+                <i class="fas fa-list"></i> Cambiar de Sala
+            </button>
+            <button class="btn btn-danger btn-sm m-1" (click)="cerrarSala()">
+                <i class="fas fa-times-circle"></i> Cerrar
+            </button>
+        </div>
+    </div>
 </div>

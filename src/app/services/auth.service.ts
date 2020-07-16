@@ -42,7 +42,6 @@ export class AuthService {
   }
 
   async googleLogin() {
-
     let errorP = {
       error: false,
       msg: '',
@@ -50,7 +49,6 @@ export class AuthService {
 
     await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then( (resp) => {
       // console.log('GOOGLE LOGIN RESP: ', resp);
-
       this.afs.collection('users').doc(resp.user.uid).get().forEach(data => {
         // console.log('[existe] hay datos');
         const userGoogle: UsuarioModel = {

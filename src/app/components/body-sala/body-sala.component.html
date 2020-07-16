@@ -1,15 +1,22 @@
 <div *ngIf="hayInfo">
-    <div class="sala row bg-primary">
+    <div class="sala row">
         <div class="img-sala m-2">
             <img [src]="infoSala.img | noimage" alt="Imagen de la sala" class="img-circle img-thumbnail">
         </div>
         <div class="title-sala text-light ml-3">
             <h4>{{infoSala.nombre}}</h4>
         </div>
-        <div class="config-sala text-right mt-3">
-            <button class="btn badge-pill btn-warning btn-sm text-right">
-                <i class="fas fa-tools"></i> Editar
-            </button>
+        <div class="row config-sala mt-3">
+            <div>
+                <button class="btn badge-pill btn-danger btn-sm" (click)="config()">
+                    <i class="fas fa-ban"></i> Abandonar sala
+                </button>
+            </div>
+            <div *ngIf="isAdmin(myUid)" class="ml-1">
+                <button class="btn badge-pill btn-warning btn-sm" (click)="config()">
+                    <i class="fas fa-tools"></i> Editar
+                </button>
+            </div>
         </div>
     </div>
     <div class="row sala-body">
@@ -19,8 +26,5 @@
         <div class="chat m-2">
             <app-chat [idSala]="idSala"></app-chat>
         </div>
-    </div>
-    <div class="footer">
-
     </div>
 </div>

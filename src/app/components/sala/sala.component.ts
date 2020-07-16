@@ -96,7 +96,22 @@ export class SalaComponent implements OnInit {
   }
 
   salaEscogida(sala: string) {
-    this.sala = sala;
-    this.haySala = true;
+    this.swalFireLoading('Entrando a');
+    this.haySala = false;
+    console.log('Sala actual: ', this.sala);
+    console.log('Sala escogida: ', sala);
+    setTimeout(() => {
+      this.sala = sala;
+      this.haySala = true;
+      Swal.close();
+    }, 300);
+  }
+
+  cerrarSala() {
+    this.swalFireLoading('Cerrando');
+    setTimeout(() => {
+      this.haySala = false;
+      Swal.close();
+    }, 300);
   }
 }

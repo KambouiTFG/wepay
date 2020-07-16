@@ -28,12 +28,20 @@
     }
     
     .config-sala {
-        width: 35%;
+        margin-left: auto;
+        margin-right: 2%;
     }
     
     .sala {
         border-top-left-radius: 35px;
         border-top-right-radius: 35px;
+        background-color: #4080FF;
+    }
+    
+    .sala-footer {
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+        background-color: #4080FF;
     }
     
     .chat {
