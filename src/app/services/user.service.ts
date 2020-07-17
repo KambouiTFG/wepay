@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import * as firebase from 'firebase/app';
 import { AuthService } from './auth.service';
 import FieldValue = firebase.firestore.FieldValue;
-import { resolve } from 'url';
 
 
 @Injectable({
@@ -41,10 +39,10 @@ export class UserService {
     });
   }
 
-  getUserByEmail(email) {
+  /* getUserByEmail(email) {
     const userr = this.users.pipe(map( users => users.find(user => user.email === email)));
     // console.log('Se obtiene: ', userr);
-  }
+  } */
 
   getMyInfo() {
     return this.afs.collection('users').doc(this.myUid).valueChanges();
@@ -102,7 +100,12 @@ export class UserService {
 
   getNameByUID(uid: string) {
     const uuser: UsuarioModel = this.usuarios.find(user => user.propertyId === uid);
-    return uuser.nombre;
+    let infoUser = {
+      nombre : uuser.nombre,
+      img : uuser.img
+
+    }
+    return infoUser;
   }
 
   private promesas(error) {

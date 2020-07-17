@@ -52,7 +52,8 @@ export class SalaService {
   crearSala(nom: string) {
     const sala: SalaModel = {
       nombre : nom,
-      admins : [this.uid],
+      owner : this.uid,
+      admins : [],
       usuarios : [this.uid],
       productos : [],
       img : '',

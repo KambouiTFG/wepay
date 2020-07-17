@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SalaService } from '../../services/sala.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-integrantes',
@@ -8,16 +8,19 @@ import { SalaService } from '../../services/sala.service';
 })
 export class IntegrantesComponent implements OnInit {
 
-  @Input() idSala;
-  infoSala;
+  @Input() idUser;
+  @Input() rol;
+  infoUser;
 
-  constructor(private _sala: SalaService ) {
-    this._sala.getSala(this.idSala).subscribe( (r) => {
+  constructor(private _us: UserService ) {
+    
+    /* this._sala.getSala(this.idSala).subscribe( (r) => {
       this.infoSala = r;
-    });
+    }); */
    }
 
   ngOnInit() {
+    this.infoUser = this._us.getNameByUID(this.idUser);
   }
 
 }

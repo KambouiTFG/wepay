@@ -51,6 +51,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   nombreUser(uid: string) {
-    return this._us.getNameByUID(uid)  ;
+    return this._us.getNameByUID(uid).nombre;
   }
 }

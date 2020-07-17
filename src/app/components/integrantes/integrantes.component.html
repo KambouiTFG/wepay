@@ -1,3 +1,6 @@
-<div class="chip m-2">
-    <!-- <img [src]="infoSala.img | noimage" alt="Sala" class="img-thumbnail img-circle"> {{infoSala.nombre}} -->
+<div class="chip m-2 row" *ngIf="infoUser !== undefined">
+    <img [src]="infoUser.img | noimage" alt="Sala" class="img-thumbnail img-circle">
+    <small>{{infoUser.nombre}}</small>
+    <span class="badge badge-pill badge-primary ml-1" *ngIf="rol == 1"><i class="fas fa-crown"></i></span>
+    <span class="badge badge-pill badge-info ml-1" *ngIf="rol == 2"><i class="fas fa-user-shield"></i></span>
 </div>

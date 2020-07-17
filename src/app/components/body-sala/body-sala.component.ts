@@ -35,14 +35,25 @@ export class BodySalaComponent implements OnInit, OnDestroy {
       this.hayInfo = true;
       this.isAdmin(this.myUid);
     });
-
-    
   }
   isAdmin(id: string): boolean {
-    if ( this.infoSala.admins.find(c => c === id)) {
+    if (id === this.infoSala.owner) {
+      return true;
+    } else if ( this.infoSala.admins.find(c => c === id)) {
       return true;
     } else {
       return false;
+    }
+  }
+
+
+  rolSala(id: string) {
+    if (id === this.infoSala.owner) {
+      return '1';
+    } else if ( this.infoSala.admins.find(c => c === id)) {
+      return '2';
+    } else {
+      return '0';
     }
   }
 

@@ -46,12 +46,33 @@
     
     .chat {
         width: 50%;
+        min-width: 300px;
+        max-width: 500px;
     }
     
     .participantes {
         width: 30%;
+        min-width: 250px;
+        max-width: 350px;
+        height: 450px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border: 1px solid #4080FF;
+        border-radius: 20px;
+        background-color: white;
+    }
+    
+    #participantes::-webkit-scrollbar {
+        border-radius: 10px;
+    }
+    
+    #participantes::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #4080FF;
+        border: 1px solid #aaa;
     }
     
     .sala-body {
         background-color: whitesmoke;
+        border: 1px solid #4080FF;
     }

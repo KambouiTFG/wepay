@@ -2,6 +2,7 @@ import { ProductoModel } from './producto.model';
 
 export class SalaModel {
     nombre = '';
+    owner = '';
     admins = [];
     usuarios = [];
     productos = [];

@@ -16,8 +16,8 @@ import { ProductoComponent } from './pages/producto/producto.component';
 const routes: Routes = [
   { path: 'home'    , component: HomeComponent, canActivate: [ AuthGuard ] },
   { path: 'me'    , component: PerfilComponent, canActivate: [ AuthGuard ] },
-  { path: 'producto/:id'    , component: ProductoComponent,  canActivate: [ AuthAdminGuard ]  },
-  { path: 'productos'    , component: ProductosComponent, canActivate: [ AuthAdminGuard ] },
+  { path: 'producto/:id'    , component: ProductoComponent/* ,  canActivate: [ AuthAdminGuard ] */  },
+  { path: 'productos'    , component: ProductosComponent/* , canActivate: [ AuthAdminGuard ]  */},
   { path: 'registro', component: RegistroComponent },
   { path: 'login'   , component: LoginComponent },
   { path: '**', redirectTo: 'registro' }
