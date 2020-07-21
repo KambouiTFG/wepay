@@ -3,6 +3,7 @@ import { SalaService } from 'src/app/services/sala.service';
 import { Subscription } from 'rxjs';
 import { SalaModel } from '../../models/sala.model';
 import { UserService } from '../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-body-sala',
@@ -16,6 +17,7 @@ export class BodySalaComponent implements OnInit, OnDestroy {
   myUid: string;
   infoSala: SalaModel;
   subs1: Subscription;
+  divConfig = false;
 
   pp;
 
@@ -57,25 +59,59 @@ export class BodySalaComponent implements OnInit, OnDestroy {
     }
   }
 
-  prueba() {
-    /* this._sala.codeSala('sb3daw').then( r => {
-      console.log('then ', r);
-    }).catch( e => {
-      console.log(e);
-    }); */
-
-
-
-    //console.log(this._sala.codeSala('sb3daw'));
+  codigoSala(code: boolean) {
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Cambiado estado...'
+    });
+    Swal.showLoading();
+    setTimeout(() => {
+      this._sala.estadoCode(this.idSala, code).then( () => {
+        Swal.close();
+      }).catch( e => {
+        Swal.fire({
+          title: 'Falló la operación',
+          icon: 'warning',
+          text: e
+        });
+      });
+    } , 300);
   }
 
 
   config() {
+    this.divConfig = !this.divConfig;
+  }
+
+  borrarSala() {
 
   }
 
   abandonarSala() {
-
+    Swal.fire({
+      title: `Seguro que quiere abandonar la sala ${this.infoSala.nombre}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'info',
+          text: 'abandonando sala...'
+        });
+        Swal.showLoading();
+        this._sala.quitarUserSala(this.idSala, this.myUid).then( () => {
+          setTimeout(() => {
+            Swal.close();
+          }, 800);
+        });
+      }
+    });
   }
+
 
 }

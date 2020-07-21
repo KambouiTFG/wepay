@@ -91,7 +91,7 @@ export class SalaService {
       console.log('usuario borrado');
     }).catch( e => {
       console.log('puta hay un fallo', e);
-    })
+    });
   }
 // ----------------------------------------------------
   añadirAdmin(idSala: string, admin: string) {
@@ -101,7 +101,7 @@ export class SalaService {
       console.log('admin añadido');
     }).catch( e => {
       console.log('puta hay un fallo', e);
-    })
+    });
   }
 // ----------------------------------------------------
   getIndexSala(idSala: string) {
@@ -126,7 +126,7 @@ export class SalaService {
     this.afs.collection('salas').doc(idSala).update({
       'usuarios' : FieldValue.arrayUnion(idUser)
     }).then( () => {
-      console.log('Sala añadida al usuario');
+      console.log('usuario añadido a sala');
     }).catch( e => {
       console.log('puta hay un fallo', e);
       const error = {
@@ -137,6 +137,43 @@ export class SalaService {
     });
     return this.promesas(null);
   }
+
+  // ----------------------------------------------------
+
+  quitarUserSala(idSala: string, idUser: string) {
+    this.afs.collection('salas').doc(idSala).update({
+      'usuarios' : FieldValue.arrayRemove(idUser)
+    }).then( () => {
+      console.log('usuario eliminado de la sala');
+      this._us.borrarSalaUser(idUser, idSala).then( () => {
+        console.log('sala eliminada del usuario');
+      });
+    }).catch( e => {
+      console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
+    return this.promesas(null);
+  }
+// ----------------------------------------------------
+estadoCode(idSala: string, estado: boolean) {
+  this.afs.collection('salas').doc(idSala).update({
+    open : estado
+  }).then( () => {
+    console.log('estado de sala cambiado');
+  }).catch( e => {
+    console.log('puta hay un fallo', e);
+    const error = {
+      error: true,
+      msg: e
+    };
+    return this.promesas(error);
+  });
+  return this.promesas(null);
+}
 
 // ----------------------------------------------------
   private promesas(error) {

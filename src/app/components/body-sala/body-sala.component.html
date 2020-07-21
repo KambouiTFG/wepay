@@ -7,19 +7,22 @@
             <h3 class="m-1">{{infoSala.nombre}}</h3>
         </div>
         <div class="row config-sala mt-3">
-            <div>
-                <button class="btn badge-pill btn-danger btn-sm" (click)="config()">
+            <div *ngIf="!isAdmin(myUid)">
+                <button class="btn badge-pill btn-danger btn-sm" (click)="abandonarSala()">
                     <i class="fas fa-ban"></i> Abandonar sala
                 </button>
             </div>
-            <div *ngIf="isAdmin(myUid)" class="ml-1">
-                <button class="btn badge-pill btn-warning btn-sm" (click)="config()">
-                    <i class="fas fa-tools"></i> Editar
+            <div *ngIf="isAdmin(myUid)">
+                <button class="btn badge-pill btn-warning btn-sm ml-1" *ngIf="!divConfig" (click)="config()">
+                    <i class="fas fa-tools"></i> Configuración
+                </button>
+                <button class="btn badge-pill btn-warning btn-sm ml-1" *ngIf="divConfig" (click)="config()">
+                    <i class="fas fa-angle-left"></i> Volver
                 </button>
             </div>
         </div>
     </div>
-    <div class="row sala-body">
+    <div class="row sala-body" *ngIf="!divConfig">
         <div class="participantes m-2" id="participantes">
             <h3 class="m-1">Participantes</h3>
             <hr>
@@ -29,6 +32,43 @@
         </div>
         <div class="chat m-2">
             <app-chat [idSala]="idSala"></app-chat>
+        </div>
+    </div>
+    <div class="row" *ngIf="divConfig">
+        <div class="config">
+            <div class="row m-2">
+                <h2>Configuracion</h2>
+                <div class="borrar-sala">
+                    <button class="btn badge-pill btn-danger btn-sm" (click)="borrarSala()">
+                        <i class="fas fa-trash"></i> Borrar sala
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="m-2">
+                <h5><small>Código sala:</small></h5>
+                <div class="input-group">
+                    <input type="text" class="form-control col-1" [value]="infoSala.code" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-success btn-sm" *ngIf="!infoSala.open" (click)="codigoSala(true)">
+                            Activar
+                        </button>
+                        <button class="btn btn-danger btn-sm" *ngIf="infoSala.open" (click)="codigoSala(false)">
+                            Desactivar
+                        </button>
+                    </div>
+                </div>
+                <!-- Por hacer -->
+                <div>
+                    <h4>cambiar imagen</h4>
+                </div>
+                <div>
+                    <h4>Cambiar nombre</h4>
+                </div>
+                <div>
+                    <h4>Gestionar participantes</h4>
+                </div>
+            </div>
         </div>
     </div>
 </div>
