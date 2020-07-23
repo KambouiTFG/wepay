@@ -22,7 +22,7 @@ export class RegistroComponent implements OnInit {
   ngOnInit() {
 
     this.usuario = new UsuarioModel();
-    console.log('q coño', this.usuario);
+    console.log('usuario a registrar', this.usuario);
   }
 
   onSubmit( form: NgForm){

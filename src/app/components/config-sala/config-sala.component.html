@@ -1,0 +1,53 @@
+<div class="config">
+    <div class="row m-2">
+        <h2>Configuracion</h2>
+        <div class="borrar-sala">
+            <button class="btn badge-pill btn-danger btn-sm" (click)="borrarSala()">
+                <i class="fas fa-trash"></i> Borrar sala
+            </button>
+        </div>
+    </div>
+    <hr>
+    <div class="m-2">
+        <div class="code">
+            <h5><small>Código sala:</small></h5>
+            <div class="input-group">
+                <input type="text" class="form-control" [value]="infoSala.code" maxlenght="6" disabled>
+                <div class="input-group-append">
+                    <button class="btn btn-success btn-sm" *ngIf="!infoSala.open" (click)="codigoSala(true)">
+                        Activar
+                    </button>
+                    <button class="btn btn-danger btn-sm" *ngIf="infoSala.open" (click)="codigoSala(false)">
+                        Desactivar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="name">
+            <h5><small>Nombre de sala:</small></h5>
+            <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="nombre" [disabled]="!cambioNombre" maxlength="16">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <button class="btn badge badge-warning" (click)="cambiarNombre()" *ngIf="!cambioNombre">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn badge badge-primary" (click)="cambiarNombre(true)" *ngIf="cambioNombre">
+                            <i class="far fa-save"></i> Guardar
+                        </button>
+                        <button class="btn badge badge-danger ml-1" (click)="cambiarNombre(false)" *ngIf="cambioNombre">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- Por hacer -->
+        <div>
+            <h4>cambiar imagen</h4>
+        </div>
+        <div>
+            <h4>Gestionar participantes</h4>
+        </div>
+    </div>
+</div>

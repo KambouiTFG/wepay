@@ -174,6 +174,22 @@ estadoCode(idSala: string, estado: boolean) {
   });
   return this.promesas(null);
 }
+// ----------------------------------------------------
+ cambiarNombreSala(idSala: string, nombre: string) {
+   this.afs.collection('salas').doc(idSala).update({
+     nombre
+   }).then ( () => {
+     console.log('nombre de sala cambiado');
+   }).catch( e => {
+    console.log('falló cambiar nombre', e);
+    const error = {
+      error: true,
+      msg: e
+    };
+    return this.promesas(error);
+   });
+   return this.promesas(null);
+ }
 
 // ----------------------------------------------------
   private promesas(error) {

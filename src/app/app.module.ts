@@ -43,6 +43,7 @@ import { RowSalaComponent } from './components/row-sala/row-sala.component';
 import { BodySalaComponent } from './components/body-sala/body-sala.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { IntegrantesComponent } from './components/integrantes/integrantes.component';
+import { ConfigSalaComponent } from './components/config-sala/config-sala.component';
 
 
 
@@ -66,7 +67,8 @@ import { IntegrantesComponent } from './components/integrantes/integrantes.compo
     RowSalaComponent,
     BodySalaComponent,
     ChatComponent,
-    IntegrantesComponent
+    IntegrantesComponent,
+    ConfigSalaComponent
     ],
   imports: [
     BrowserModule,

@@ -59,7 +59,7 @@ export class BodySalaComponent implements OnInit, OnDestroy {
     }
   }
 
-  codigoSala(code: boolean) {
+  /* codigoSala(code: boolean) {
     Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
@@ -77,16 +77,16 @@ export class BodySalaComponent implements OnInit, OnDestroy {
         });
       });
     } , 300);
-  }
+  } */
 
 
   config() {
     this.divConfig = !this.divConfig;
   }
 
-  borrarSala() {
+  /* borrarSala() {
 
-  }
+  } */
 
   abandonarSala() {
     Swal.fire({
