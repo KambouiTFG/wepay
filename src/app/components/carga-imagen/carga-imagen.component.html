@@ -1,0 +1,30 @@
+<input type="file" accept="image/*" id="inputGroupFile04 " class="inputfile" (change)="uploadFile($event)">
+<label class="btn btn-success" for="inputGroupFile04 ">Choose file</label>
+
+
+<div>
+    <table class="table " *ngIf="hayArchivo ">
+        <thead class="thead-dark ">
+            <tr>
+                <th>Nombre archivo</th>
+                <th>Tamaño</th>
+                <th>Progreso</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{archivo.name}}</td>
+                <td>{{archivo.size / 1024 / 1024 | number: '.2-2'}} MB</td>
+                <td>
+                    <button class="btn btn-success" (click)="subirImagen()" *ngIf="!estaSubiendo && !subido">
+                        <i class="fas fa-upload"></i> Subir
+                    </button>
+                    <div class="progress" *ngIf="estaSubiendo">
+                        <div class="progress-bar " role="progressbar " [ngStyle]="{ 'width': (_storage.uploadPercent | async) + '%'}"></div>
+                    </div>
+                    <span class="badge badge-success" *ngIf="(_storage.uploadPercent | async) >= 100 && subido">Subido</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

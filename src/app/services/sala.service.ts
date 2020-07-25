@@ -175,7 +175,7 @@ estadoCode(idSala: string, estado: boolean) {
   return this.promesas(null);
 }
 // ----------------------------------------------------
- cambiarNombreSala(idSala: string, nombre: string) {
+ cambiarNombreSala(idSala: string, nombre) {
    this.afs.collection('salas').doc(idSala).update({
      nombre
    }).then ( () => {
@@ -190,6 +190,23 @@ estadoCode(idSala: string, estado: boolean) {
    });
    return this.promesas(null);
  }
+
+ // ----------------------------------------------------
+ cambiarImgSala(idSala: string, img: string) {
+  this.afs.collection('salas').doc(idSala).update({
+    img
+  }).then ( () => {
+    console.log('imagen de sala cambiado');
+  }).catch( e => {
+   console.log('falló cambiar imagen', e);
+   const error = {
+     error: true,
+     msg: e
+   };
+   return this.promesas(error);
+  });
+  return this.promesas(null);
+}
 
 // ----------------------------------------------------
   private promesas(error) {

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { FormsModule } from '@angular/forms';
@@ -44,6 +45,7 @@ import { BodySalaComponent } from './components/body-sala/body-sala.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { IntegrantesComponent } from './components/integrantes/integrantes.component';
 import { ConfigSalaComponent } from './components/config-sala/config-sala.component';
+import { CargaImagenComponent } from './components/carga-imagen/carga-imagen.component';
 
 
 
@@ -68,7 +70,8 @@ import { ConfigSalaComponent } from './components/config-sala/config-sala.compon
     BodySalaComponent,
     ChatComponent,
     IntegrantesComponent,
-    ConfigSalaComponent
+    ConfigSalaComponent,
+    CargaImagenComponent
     ],
   imports: [
     BrowserModule,
@@ -78,7 +81,8 @@ import { ConfigSalaComponent } from './components/config-sala/config-sala.compon
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [
     AuthService,
