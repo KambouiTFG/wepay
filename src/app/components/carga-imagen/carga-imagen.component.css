@@ -6,3 +6,8 @@
     position: absolute;
     z-index: -1;
 }
+
+.btnUpload {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -14,6 +14,7 @@ export class CargaImagenComponent implements OnInit {
   hayArchivo: boolean;
   estaSubiendo: boolean;
   subido: boolean;
+  puede: boolean;
 
 
   constructor(private _storage: CargaImagenService) { }
@@ -22,6 +23,7 @@ export class CargaImagenComponent implements OnInit {
     this.hayArchivo = false;
     this.estaSubiendo = false;
     this.subido = false;
+    this.puede = true;
   }
 
   uploadFile(event) {
@@ -30,17 +32,18 @@ export class CargaImagenComponent implements OnInit {
       this.estaSubiendo = false;
       this.subido = false;
       return;
-    } else if(event.target.files[0] !== this.archivo) {
-      this.hayArchivo = false;
-      this.estaSubiendo = false;
-      this.subido = false;
     }
     this.archivo = event.target.files[0];
+    if ( this.archivo.size > 1048576 || this.archivo.type.indexOf('image/') < 0 ) {
+      this.puede = false;
+    } else {
+      this.puede = true;
+    }
     this.estaSubiendo = false;
     this.subido = false;
     this.hayArchivo = true;
-    console.log('archivo: ', this.archivo);
   }
+
   subirImagen() {
     this.estaSubiendo = true;
     this._storage.subirImagenSala(this.archivo, this.idSala).then(() => {
