@@ -23,10 +23,6 @@ export class ConfigSalaComponent implements OnInit {
     this.nombre = this.infoSala.nombre;
   }
 
-  borrarSala() {
-
-  }
-
   cambiarNombre(d?: boolean) {
     this.cambioNombre = !this.cambioNombre;
     if (d === undefined) {
@@ -62,6 +58,37 @@ export class ConfigSalaComponent implements OnInit {
     });
   }
 
+  borrarSala() {
+    Swal.fire({
+      title: `Seguro que quiere borrar la sala ${this.infoSala.nombre}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'info',
+          text: 'Borrando sala...'
+        });
+        Swal.showLoading();
+
+        this._sala.borrarSala(this.idSala, this.infoSala.usuarios)
+        .then( () => {
+          this.swalClose();
+        }).catch( e => {
+          this.swalError(e);
+        });
+      }
+    });
+  }
+
+  isOwner() {
+    return this._sala.esAdmin(this.infoSala.owner);
+  }
+
   private swalFire(accion: string) {
     Swal.fire({
       allowOutsideClick: false,
@@ -84,5 +111,4 @@ export class ConfigSalaComponent implements OnInit {
       text: error
     });
   }
-
 }

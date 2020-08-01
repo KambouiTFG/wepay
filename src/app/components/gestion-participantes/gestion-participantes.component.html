@@ -1,0 +1,32 @@
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th></th>
+            <th>Gestión de usuarios</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="usuarios.length === 0">
+            <th></th>
+            <th>Comparte el código de sala para que se puedan unir a la sala</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let usuario of usuarios; index as i">
+            <td>{{usuario.nombre}}</td>
+            <td>
+                <button class="btn btn-success btn-sm" *ngIf="!esAdmin(i)" (click)="hacerAdmin(i)">
+                    <small><i class="fas fa-plus"></i></small><i class="fas fa-user-shield"></i>
+                </button>
+                <button class="btn btn-warning btn-sm" *ngIf="esAdmin(i)" (click)="quitarAdmin(i)">
+                    <small><i class="fas fa-minus"></i></small><i class="fas fa-user-shield"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(i)">
+                    <i class="fas fa-user-times"></i><small> Echar usuario</small>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

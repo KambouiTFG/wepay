@@ -42,12 +42,11 @@
                 </div>
             </div>
         </div>
-        <!-- Por hacer -->
         <div class="config-img">
             <app-carga-imagen [idSala]="idSala"></app-carga-imagen>
         </div>
-        <div>
-            <h4>Gestionar participantes</h4>
+        <div *ngIf="isOwner()">
+            <app-gestion-participantes [idSala]="idSala"></app-gestion-participantes>
         </div>
     </div>
 </div>

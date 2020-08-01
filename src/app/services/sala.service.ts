@@ -91,7 +91,13 @@ export class SalaService {
       console.log('usuario borrado');
     }).catch( e => {
       console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
     });
+    return this.promesas(null);
   }
 // ----------------------------------------------------
   añadirAdmin(idSala: string, admin: string) {
@@ -101,7 +107,13 @@ export class SalaService {
       console.log('admin añadido');
     }).catch( e => {
       console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
     });
+    return this.promesas(null);
   }
 // ----------------------------------------------------
   getIndexSala(idSala: string) {
@@ -142,12 +154,8 @@ export class SalaService {
 
   quitarUserSala(idSala: string, idUser: string) {
     this.afs.collection('salas').doc(idSala).update({
-      'usuarios' : FieldValue.arrayRemove(idUser)
-    }).then( () => {
-      console.log('usuario eliminado de la sala');
-      this._us.borrarSalaUser(idUser, idSala).then( () => {
-        console.log('sala eliminada del usuario');
-      });
+      admins : FieldValue.arrayRemove(idUser),
+      usuarios : FieldValue.arrayRemove(idUser)
     }).catch( e => {
       console.log('puta hay un fallo', e);
       const error = {
@@ -156,6 +164,9 @@ export class SalaService {
       };
       return this.promesas(error);
     });
+
+    this._us.borrarSalaUser(idUser, idSala);
+
     return this.promesas(null);
   }
 // ----------------------------------------------------
@@ -204,6 +215,33 @@ estadoCode(idSala: string, estado: boolean) {
      msg: e
    };
    return this.promesas(error);
+  });
+  return this.promesas(null);
+}
+// ----------------------------------------------------
+esAdmin(idOwner: string) {
+  if (this.uid === idOwner) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// ----------------------------------------------------
+
+borrarSala(idSala: string, usuarios: string[]) {
+  for( let usuario of usuarios) {
+    this._us.borrarSalaUser(usuario, idSala).then( () => {
+      console.log('sala eliminada del usuario');
+    });
+  }
+  this.afs.collection('salas').doc(idSala)
+  .delete().catch( e => {
+    const error = {
+      error: true,
+      msg: e
+    };
+    return this.promesas(error);
   });
   return this.promesas(null);
 }

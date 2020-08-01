@@ -84,7 +84,7 @@ export class UserService {
     this.afs.collection('users').doc(uid).update({
       'salas' : FieldValue.arrayRemove(uidSala)
     }).then( () => {
-      console.log('Sala borrada');
+      console.log('Sala borrada del usuario');
     }).catch( e => {
       console.log('puta hay un fallo', e);
       const error = {
@@ -103,7 +103,6 @@ export class UserService {
     let infoUser = {
       nombre : uuser.nombre,
       img : uuser.img
-
     }
     return infoUser;
   }

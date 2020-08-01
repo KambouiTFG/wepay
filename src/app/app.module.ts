@@ -46,6 +46,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { IntegrantesComponent } from './components/integrantes/integrantes.component';
 import { ConfigSalaComponent } from './components/config-sala/config-sala.component';
 import { CargaImagenComponent } from './components/carga-imagen/carga-imagen.component';
+import { GestionParticipantesComponent } from './components/gestion-participantes/gestion-participantes.component';
 
 
 
@@ -71,7 +72,8 @@ import { CargaImagenComponent } from './components/carga-imagen/carga-imagen.com
     ChatComponent,
     IntegrantesComponent,
     ConfigSalaComponent,
-    CargaImagenComponent
+    CargaImagenComponent,
+    GestionParticipantesComponent
     ],
   imports: [
     BrowserModule,
