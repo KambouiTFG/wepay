@@ -66,7 +66,7 @@ export class UserService {
 
   añadirSalaUser(uid: string, uidSala: string) {
     this.afs.collection('users').doc(uid).update({
-      'salas' : FieldValue.arrayUnion(uidSala)
+      salas : FieldValue.arrayUnion(uidSala)
     }).then( () => {
       console.log('Sala añadida al usuario');
     }).catch( e => {
@@ -82,7 +82,7 @@ export class UserService {
 
   borrarSalaUser(uid: string, uidSala: string) {
     this.afs.collection('users').doc(uid).update({
-      'salas' : FieldValue.arrayRemove(uidSala)
+      salas : FieldValue.arrayRemove(uidSala)
     }).then( () => {
       console.log('Sala borrada del usuario');
     }).catch( e => {

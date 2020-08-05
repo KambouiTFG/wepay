@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import FieldValue = firebase.firestore.FieldValue;
+import { identity } from 'rxjs';
 
 
 
@@ -26,7 +27,7 @@ export class SalaService {
     return this.afs.collection('salas').valueChanges({ idField: 'propertyId' });
   } */
 // ----------------------------------------------------
-  codeSala(code: string) {
+  /* codeSala(code: string) {
     return new Promise( (resolve, reject) => {
       this.afs.collection('salas').ref.where('code', '==', code).where('open', '==', true)
       .onSnapshot(snap => {
@@ -47,7 +48,53 @@ export class SalaService {
         });
       });
     });
+  } */
+
+  codeSala(code: string) { //idField: 'propertyId' 
+    return new Promise( (resolve, reject) => {
+      this.afs.collection('salas').ref.where('code', '==', code).where('open', '==', true)
+      .get().then( (r) => {
+        r.forEach( (rr) => {
+          resolve(rr.data());
+          this.añadirUserSala(rr.id, this.uid).then( () => {
+            this._us.añadirSalaUser(this.uid, rr.id).then( () => {
+              resolve(rr.id);
+              return this.promesas2(rr.id);
+            }).catch( e => {
+              reject(null);
+            });
+          }).catch(e => {
+            reject(null);
+          });
+          /* console.log('rr1: ', rr.id);
+          console.log('rr2: ', rr.data()); */
+        });
+        reject(null);
+      });
+    });
+
+    /* .onSnapshot(snap => {
+      if ( snap.empty) {
+        return this.promesas2(null);
+      }
+      snap.forEach(r => {
+        console.log('a ver q ', r.data());
+        this.añadirUserSala(r.id, this.uid).then( () => {
+          this._us.añadirSalaUser(this.uid, r.id).then( () => {
+            //resolve(r.id);
+            return this.promesas2(r.id);
+          }).catch( e => {
+            //reject(null);
+            return this.promesas2(null);
+          });
+        }).catch(e => {
+          //reject(null);
+          return this.promesas2(null);
+        });
+      });
+    }); */
   }
+
 // ----------------------------------------------------
   crearSala(nom: string) {
     const sala: SalaModel = {
@@ -152,10 +199,17 @@ export class SalaService {
 
   // ----------------------------------------------------
 
-  quitarUserSala(idSala: string, idUser: string) {
-    this.afs.collection('salas').doc(idSala).update({
-      admins : FieldValue.arrayRemove(idUser),
-      usuarios : FieldValue.arrayRemove(idUser)
+ /*  quitarUserSala(idSala: string, idUser: string) {
+    this._us.borrarSalaUser(idUser, idSala).then( () => {
+      console.log('vamos a borrar el usuario de la sala');
+      setTimeout(() => {
+        this.afs.collection('salas').doc(idSala).update({
+          admins : FieldValue.arrayRemove(idUser),
+          usuarios : FieldValue.arrayRemove(idUser)
+        });
+        console.log('[SALA] en el timeoout');
+      }, 600);
+      console.log('[SALA] despues del time');
     }).catch( e => {
       console.log('puta hay un fallo', e);
       const error = {
@@ -164,9 +218,30 @@ export class SalaService {
       };
       return this.promesas(error);
     });
+    return this.promesas(null);
+  } */
 
-    this._us.borrarSalaUser(idUser, idSala);
+// arreglar esto
 
+  quitarUserSala(idSala: string, idUser: string) {
+    this._us.borrarSalaUser(idUser, idSala).then( () => {
+      console.log('vamos a borrar el usuario de la sala');
+      setTimeout(() => {
+        this.afs.collection('salas').doc(idSala).update({
+          admins : FieldValue.arrayRemove(idUser),
+          usuarios : FieldValue.arrayRemove(idUser)
+        });
+        console.log('[SALA] en el timeoout');
+      }, 600);
+      console.log('[SALA] despues del time');
+    }).catch( e => {
+      console.log('puta hay un fallo', e);
+      const error = {
+        error: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
     return this.promesas(null);
   }
 // ----------------------------------------------------
@@ -256,6 +331,16 @@ borrarSala(idSala: string, usuarios: string[]) {
         // console.log('error promise');
         reject(error.msg);
       }
-    })
+    });
+  }
+
+  private promesas2(resp) {
+    return new Promise((resolve, reject) => {
+      if (resp === null) {
+        reject('fracaso');
+      } else {
+        resolve(resp);
+      }
+    });
   }
 }

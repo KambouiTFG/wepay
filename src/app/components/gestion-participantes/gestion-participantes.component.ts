@@ -63,6 +63,7 @@ export class GestionParticipantesComponent implements OnInit {
 
   eliminarUsuario(index) {
     this.swalFire('Eliminando usuario...');
+    console.log('usuario a borrar: ', this.infoSala.usuarios[index + 1]);
     this._sala.quitarUserSala(this.idSala, this.infoSala.usuarios[index + 1]).then( () => {
       this.swalClose();
     }).catch( e => {

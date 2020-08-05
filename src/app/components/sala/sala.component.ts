@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { SalaService } from '../../services/sala.service';
 import { UserService } from '../../services/user.service';
 import { Subscription } from 'rxjs';
+import { SalaModel } from '../../models/sala.model';
 
 
 @Component({
@@ -59,9 +60,17 @@ export class SalaComponent implements OnInit {
     this.swalFireLoading('Buscando');
 
 
-    this._sala.codeSala(this.codigoSala).then( (r: string) => {
+    this._sala.codeSala(this.codigoSala)
+    /* .then( (r) => {
+      console.log('se obtiene: ', r);
+      Swal.close();
+    }).catch( () => {
+      console.log('nulllll');
+    }); */
+    
+    .then( (r: SalaModel) => {
       console.log('then ', r);
-      this.swalFire('buscar', true, 'Sala añadida a la lista');
+      this.swalFire('buscar', true, `Se ha añadido a la lista la siguiente sala: \b${r.nombre}`);
     }).catch( e => {
       console.log(e);
       this.swalFire('buscar', false, 'No se ha encontrado la sala');
