@@ -29,7 +29,7 @@ export class ProductoComponent implements OnInit, OnDestroy {
       this.id = params['id'];
     });
     if (this.id !== 'nuevo') {
-      this.subs2 = this._ps.getProducto(this.id).subscribe((data) => {
+      this.subs2 = this._ps.getProductoOTRO(this.id).subscribe((data) => {
         this.productoOut = data;
         this.isProduct = true;
       });

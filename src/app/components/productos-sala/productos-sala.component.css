@@ -1,0 +1,84 @@
+.img-thumb {
+    width: 100%;
+    height: 100%;
+}
+
+.img-circle {
+    border-radius: 100%;
+    width: 100%;
+}
+
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    height: 50px;
+    font-size: 15px;
+    line-height: 50px;
+    border-radius: 25px;
+    background-color: whitesmoke;
+    font-size: 1em;
+    width: 95%;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.chip span {
+    float: right;
+    margin-top: 15px;
+}
+
+.other:hover {
+    -ms-transform: scale(1.1);
+    /* IE 9 */
+    -webkit-transform: scale(1.1);
+    /* Safari 3-8 */
+    transform: scale(1.1);
+    background-color: #5eaef2;
+    cursor: pointer;
+}
+
+.derecha {
+    margin-left: auto;
+}
+
+#productos-body::-webkit-scrollbar {
+    border-radius: 10px;
+}
+
+#productos-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #4080FF;
+    border: 1px solid #aaa;
+}
+
+.productos-head {
+    width: 100%;
+    height: 15%;
+}
+
+.productos-body {
+    width: 100%;
+    height: 69%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.productos-footer {
+    width: 100%;
+    height: 15%;
+}
+
+.total {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.botones {
+    padding-left: 30px;
+}

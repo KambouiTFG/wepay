@@ -47,6 +47,7 @@ import { IntegrantesComponent } from './components/integrantes/integrantes.compo
 import { ConfigSalaComponent } from './components/config-sala/config-sala.component';
 import { CargaImagenComponent } from './components/carga-imagen/carga-imagen.component';
 import { GestionParticipantesComponent } from './components/gestion-participantes/gestion-participantes.component';
+import { ProductosSalaComponent } from './components/productos-sala/productos-sala.component';
 
 
 
@@ -73,7 +74,8 @@ import { GestionParticipantesComponent } from './components/gestion-participante
     IntegrantesComponent,
     ConfigSalaComponent,
     CargaImagenComponent,
-    GestionParticipantesComponent
+    GestionParticipantesComponent,
+    ProductosSalaComponent
     ],
   imports: [
     BrowserModule,

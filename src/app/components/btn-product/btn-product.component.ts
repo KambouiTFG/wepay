@@ -37,7 +37,7 @@ export class BtnProductComponent implements OnInit {
           text: 'Borrando producto...'
         });
         Swal.showLoading();
-        this._ps.borrarProducto(this.id).then( () => {
+        this._ps.borrarProductoOTRO(this.id).then( () => {
           Swal.fire(
             'Producto borrado',
             '',

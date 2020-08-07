@@ -6,8 +6,6 @@ import * as firebase from 'firebase/app';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import FieldValue = firebase.firestore.FieldValue;
-import { identity } from 'rxjs';
-
 
 
 @Injectable({
@@ -27,29 +25,6 @@ export class SalaService {
     return this.afs.collection('salas').valueChanges({ idField: 'propertyId' });
   } */
 // ----------------------------------------------------
-  /* codeSala(code: string) {
-    return new Promise( (resolve, reject) => {
-      this.afs.collection('salas').ref.where('code', '==', code).where('open', '==', true)
-      .onSnapshot(snap => {
-        if ( snap.empty) {
-          reject(null);
-        }
-        snap.forEach(r => {
-          console.log('a ver q ', r.data());
-          this.añadirUserSala(r.id, this.uid).then( () => {
-            this._us.añadirSalaUser(this.uid, r.id).then( () => {
-              resolve(r.id);
-            }).catch( e => {
-              reject(null);
-            });
-          }).catch(e => {
-            reject(null);
-          });
-        });
-      });
-    });
-  } */
-
   codeSala(code: string) { //idField: 'propertyId' 
     return new Promise( (resolve, reject) => {
       this.afs.collection('salas').ref.where('code', '==', code).where('open', '==', true)
@@ -66,33 +41,10 @@ export class SalaService {
           }).catch(e => {
             reject(null);
           });
-          /* console.log('rr1: ', rr.id);
-          console.log('rr2: ', rr.data()); */
         });
         reject(null);
       });
     });
-
-    /* .onSnapshot(snap => {
-      if ( snap.empty) {
-        return this.promesas2(null);
-      }
-      snap.forEach(r => {
-        console.log('a ver q ', r.data());
-        this.añadirUserSala(r.id, this.uid).then( () => {
-          this._us.añadirSalaUser(this.uid, r.id).then( () => {
-            //resolve(r.id);
-            return this.promesas2(r.id);
-          }).catch( e => {
-            //reject(null);
-            return this.promesas2(null);
-          });
-        }).catch(e => {
-          //reject(null);
-          return this.promesas2(null);
-        });
-      });
-    }); */
   }
 
 // ----------------------------------------------------
@@ -225,17 +177,12 @@ export class SalaService {
 
   quitarUserSala(idSala: string, idUser: string) {
     this._us.borrarSalaUser(idUser, idSala).then( () => {
-      console.log('vamos a borrar el usuario de la sala');
-      setTimeout(() => {
-        this.afs.collection('salas').doc(idSala).update({
-          admins : FieldValue.arrayRemove(idUser),
-          usuarios : FieldValue.arrayRemove(idUser)
-        });
-        console.log('[SALA] en el timeoout');
-      }, 600);
-      console.log('[SALA] despues del time');
+      this.afs.collection('salas').doc(idSala).update({
+        admins : FieldValue.arrayRemove(idUser),
+        usuarios : FieldValue.arrayRemove(idUser)
+      });
     }).catch( e => {
-      console.log('puta hay un fallo', e);
+      console.log('falló la operación', e);
       const error = {
         error: true,
         msg: e

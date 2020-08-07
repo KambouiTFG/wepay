@@ -1,0 +1,32 @@
+<!-- <div>
+    
+    <div class="chip m-2 row">
+        <small>{{infoUser.nombre}}</small>
+        <span class="badge badge-pill badge-primary ml-1"><i class="fas fa-euro-sign"></i></span>
+    </div>
+</div> -->
+
+<div class="productos-head">
+    <h3 class="m-1">Productos</h3>
+    <hr>
+</div>
+<div class="productos-body" id="productos-body">
+    <!-- productos aqui -->
+</div>
+<div class="productos-footer">
+    <hr>
+    <div class="row mb-1">
+        <div class="botones">
+            <button type="button" class="btn btn-info badge-pill btn-sm" data-toggle="modal" data-target="#añadirProducto">
+                <i class="fas fa-cart-plus"></i> Añadir
+            </button>
+        </div>
+        <div class="total">
+            <strong>Total</strong>
+            <span class="badge badge-pill badge-primary ml-1">100 €</span>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL "#añadirProducto"-->
+<app-newproduct [idSala]="idSala" [infoSala]="infoSala"></app-newproduct>

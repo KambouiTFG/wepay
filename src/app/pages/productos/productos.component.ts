@@ -26,11 +26,11 @@ export class ProductosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subs1 = this._ps.products.subscribe( r => {
+    /* this.subs1 = this._ps.products.subscribe( r => {
       this.allProducts = r;
       this.listar = true;
       console.log('productos: ', r);
-    });
+    }); */
   }
 
   ngOnDestroy(): void {

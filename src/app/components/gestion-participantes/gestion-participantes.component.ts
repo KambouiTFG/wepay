@@ -1,38 +1,43 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { SalaService } from '../../services/sala.service';
 import Swal from 'sweetalert2';
 import { SalaModel } from '../../models/sala.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gestion-participantes',
   templateUrl: './gestion-participantes.component.html',
   styleUrls: ['./gestion-participantes.component.css']
 })
-export class GestionParticipantesComponent implements OnInit {
+export class GestionParticipantesComponent implements OnInit, OnDestroy {
 
   @Input() idSala: string;
   infoSala: SalaModel;
   usuarios = [];
   hayInfo = false;
+  subs1: Subscription;
 
   constructor(private _us: UserService, private _sala: SalaService) { }
 
   ngOnInit() {
-
-    this._sala.getSala(this.idSala).subscribe( (r: SalaModel) => {
+    this.subs1 = this._sala.getSala(this.idSala).subscribe( (r: SalaModel) => {
       this.infoSala = r;
       this.hayInfo = true;
       this.usuarios = [];
 
       let i = 0;
-      for( let usuario of this.infoSala.usuarios){
-        if (i !== 0 ){
+      for( const usuario of this.infoSala.usuarios){
+        if (i !== 0 ) {
           this.usuarios.push(this._us.getNameByUID(usuario));
         }
         i++;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subs1.unsubscribe();
   }
 
   hacerAdmin(index) {

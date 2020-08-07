@@ -2,7 +2,7 @@
     <div>
         <h1>Selecciona una sala de la lista</h1>
     </div>
-    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#prueba">
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#listaSalas">
         <i class="fas fa-list"></i> Mis salas
     </button>
     <div class="text-center m-5">
@@ -39,13 +39,16 @@
     </div>
 </div>
 
-<div *ngIf="loading" id="prueba" class="modal fade">
+<div *ngIf="loading" id="listaSalas" class="modal fade">
     <div class="modal-dialog  modal-dialog-scrollable">
         <div class="modal-content" style="border-radius: 20px;">
             <div class="modal-header bg-primary text-white">
                 <h3>Elige una sala</h3>
             </div>
             <div class="modal-body bg-light">
+                <div class="alert alert-danger" role="alert" *ngIf="myInfo.salas.length === 0">
+                    No perteneces a ninguna sala <strong>¡Crea o únete a una!</strong>
+                </div>
                 <div *ngFor="let sala of myInfo.salas">
                     <div (click)="salaEscogida(sala)" class="zoom pl-5 md-2" data-dismiss="modal">
                         <app-row-sala [idSala]="sala"></app-row-sala>
@@ -64,7 +67,7 @@
     <app-body-sala [idSala]="sala"></app-body-sala>
     <div class="row sala-footer">
         <div class="btns">
-            <button class="btn btn-dark btn-sm m-1" type="button" data-toggle="modal" data-target="#prueba">
+            <button class="btn btn-dark btn-sm m-1" type="button" data-toggle="modal" data-target="#listaSalas">
                 <i class="fas fa-list"></i> Cambiar de Sala
             </button>
             <button class="btn btn-danger btn-sm m-1" (click)="cerrarSala()">

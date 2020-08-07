@@ -1,9 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ProductoModel } from '../../models/producto.model';
 import Swal from 'sweetalert2';
 
 import { ProductoService } from '../../services/producto.service';
+import { ProductoSalaModel } from '../../models/product-sala';
+import { SalaModel } from '../../models/sala.model';
+
+import $ from "jquery";
+
 
 
 @Component({
@@ -12,27 +16,21 @@ import { ProductoService } from '../../services/producto.service';
   styleUrls: ['./newproduct.component.css']
 })
 export class NewproductComponent implements OnInit {
-  producto: ProductoModel;
-  newProduct: boolean;
+  producto: ProductoSalaModel;
 
-  @Input() productoEdit: ProductoModel;
-  @Input() propertyId: string;
+  @Input() idSala: string;
+  @Input() infoSala: SalaModel;
 
-  constructor(private _ps: ProductoService) {
-    
-  }
+  constructor(private _ps: ProductoService) {}
 
   ngOnInit() {
-    if (this.productoEdit === null) {
-      this.producto = new ProductoModel();
-      this.newProduct = true;
-    } else {
-      this.producto = this.productoEdit;
-      this.newProduct = false;
-    }
+    this.producto = new ProductoSalaModel();
+    console.log(this.producto);
+    console.log(this.idSala);
   }
 
   nuevoProducto(form: NgForm) {
+    console.log('probando: ', this.producto);
     if (form.invalid) {
       return;
     }
@@ -43,12 +41,14 @@ export class NewproductComponent implements OnInit {
     });
     Swal.showLoading();
 
-    this._ps.dbProducto(this.producto, this.propertyId).then( () => {
+    this.producto.participantes = this.infoSala.usuarios;
+    this._ps.añadirProducto(this.idSala, this.producto).then( () => {
       Swal.fire({
         icon: 'success',
         title: 'Éxito'
       });
-
+      $('#añadirProducto').hide();
+      // $('#añadirProducto').modal('hidePrevented.bs.modal');
     }).catch( (e) => {
       Swal.fire({
         icon: 'error',
@@ -57,8 +57,8 @@ export class NewproductComponent implements OnInit {
 
     });
     form.resetForm();
-    let x = new ProductoModel();
-    this.producto = x;
+    /* let x = new ProductoSalaModel();
+    this.producto = x; */
   }
 
 }

@@ -19,7 +19,7 @@ export class SalaComponent implements OnInit {
   nombreSala = '';
   codigoSala = '';
 
-  myInfo;
+  myInfo: any;
 
   sub1: Subscription;
   sala: string;
@@ -29,12 +29,12 @@ export class SalaComponent implements OnInit {
               private _us: UserService) { }
 
   ngOnInit() {
-    this.sub1 = this._us.getMyInfo().subscribe( resp => {
+    this.sub1 = this._us.getMyInfo().subscribe( (resp) => {
       this.myInfo = resp;
       console.log('mi info', this.myInfo);
       this.loading = true;
       this.haySala = false;
-    })
+    });
   }
 
   crearSala(form: NgForm) {
@@ -44,7 +44,7 @@ export class SalaComponent implements OnInit {
     }
     this.swalFireLoading('Creando');
     this._sala.crearSala(this.nombreSala).then(() => {
-      this.swalFire('crear', true);
+      this.swalFire('crear', true, 'La podrás encontrar en "Mis salas"');
       form.resetForm();
     }).catch( (e: any) => {
       this.swalFire('crear', false, e);
@@ -60,22 +60,13 @@ export class SalaComponent implements OnInit {
     this.swalFireLoading('Buscando');
 
 
-    this._sala.codeSala(this.codigoSala)
-    /* .then( (r) => {
-      console.log('se obtiene: ', r);
-      Swal.close();
-    }).catch( () => {
-      console.log('nulllll');
-    }); */
-    
-    .then( (r: SalaModel) => {
+    this._sala.codeSala(this.codigoSala).then( (r: SalaModel) => {
       console.log('then ', r);
-      this.swalFire('buscar', true, `Se ha añadido a la lista la siguiente sala: \b${r.nombre}`);
+      this.swalFire('buscar', true, `Se ha añadido a la lista la siguiente sala: ${r.nombre}`);
     }).catch( e => {
       console.log(e);
       this.swalFire('buscar', false, 'No se ha encontrado la sala');
     });
-    //Swal.close();
     form.resetForm();
   }
 

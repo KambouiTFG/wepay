@@ -33,6 +33,9 @@
         <div class="chat m-2">
             <app-chat [idSala]="idSala"></app-chat>
         </div>
+        <div class="productos m-2">
+            <app-productos-sala [idSala]="idSala" [infoSala]="infoSala"></app-productos-sala>
+        </div>
     </div>
     <div class="row" *ngIf="divConfig">
         <app-config-sala [idSala]="idSala" [infoSala]="infoSala" class="config"></app-config-sala>
