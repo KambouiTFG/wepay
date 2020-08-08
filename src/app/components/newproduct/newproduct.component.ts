@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -7,6 +7,7 @@ import { ProductoSalaModel } from '../../models/product-sala';
 import { SalaModel } from '../../models/sala.model';
 
 import $ from "jquery";
+import { Subscription } from 'rxjs';
 
 
 
@@ -15,23 +16,29 @@ import $ from "jquery";
   templateUrl: './newproduct.component.html',
   styleUrls: ['./newproduct.component.css']
 })
-export class NewproductComponent implements OnInit {
+export class NewproductComponent implements OnInit, OnDestroy {
   producto: ProductoSalaModel;
 
   @Input() idSala: string;
   @Input() infoSala: SalaModel;
 
   constructor(private _ps: ProductoService) {}
+  ngOnDestroy(): void {
+    console.log('adiooooos');
+  }
 
   ngOnInit() {
     this.producto = new ProductoSalaModel();
-    console.log(this.producto);
-    console.log(this.idSala);
   }
 
   nuevoProducto(form: NgForm) {
-    console.log('probando: ', this.producto);
     if (form.invalid) {
+      return;
+    } else if (form.controls.precioProducto.value <= 0) {
+      form.controls.precioProducto.setErrors({incorrect: true});
+      return;
+    } else if (form.controls.unidadProducto.value <= 0) {
+      form.controls.unidadProducto.setErrors({incorrect: true});
       return;
     }
     Swal.fire({
@@ -40,25 +47,20 @@ export class NewproductComponent implements OnInit {
       text: 'Añadiendo producto...'
     });
     Swal.showLoading();
-
     this.producto.participantes = this.infoSala.usuarios;
     this._ps.añadirProducto(this.idSala, this.producto).then( () => {
       Swal.fire({
         icon: 'success',
-        title: 'Éxito'
+        title: 'Producto añadido a la sala'
       });
-      $('#añadirProducto').hide();
-      // $('#añadirProducto').modal('hidePrevented.bs.modal');
     }).catch( (e) => {
       Swal.fire({
         icon: 'error',
         text: e
       });
-
     });
+    this.producto = new ProductoSalaModel();
     form.resetForm();
-    /* let x = new ProductoSalaModel();
-    this.producto = x; */
+    $('#cerrarModal').click();
   }
-
 }

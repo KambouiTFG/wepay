@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ProductoModel } from '../models/producto.model';
 import { Observable } from 'rxjs';
 import { ProductoSalaModel } from '../models/product-sala';
+import { SalaService } from './sala.service';
 
 
 @Injectable({
@@ -11,20 +12,18 @@ import { ProductoSalaModel } from '../models/product-sala';
 export class ProductoService {
   
 
-  constructor( private afs: AngularFirestore ) { }
+  constructor( private afs: AngularFirestore, private _sala: SalaService ) { }
 
   /* public get products(): Observable<any> {
     return this.afs.collection('products').valueChanges({ idField: 'propertyId' });
   } */
   
   añadirProducto(idSala: string, producto: ProductoSalaModel) {
-
-    const newP = {...producto}
-    console.log('EN EL SERVICIO', idSala, producto);
-    /* return this.promesas(null) */
+    const newP = {...producto};
     this.afs.collection('salas').doc(idSala).collection('productos')
     .add(newP).then( (r) => {
-      console.log('Producto añadido en sala, ', r);
+      //console.log('Producto añadido en sala, ', r.id);
+      this._sala.añadirProductoSala(idSala, r.id);
     }).catch( e => {
       const error = {
         state: true,
@@ -34,7 +33,6 @@ export class ProductoService {
     });
     return this.promesas(null);
   }
-
 
   getProductos(idSala: string) {
     return this.afs.collection('salas').doc(idSala).collection('productos')

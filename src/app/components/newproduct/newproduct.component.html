@@ -1,5 +1,9 @@
 <!-- MODAL -->
-<div class="modal fade" id="añadirProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ -->
+<!-- 
+ data-backdrop="static" data-keyboard="false" -->
+<div class="modal fade" id="añadirProducto" tabindex="-1" data-backdrop="static" data-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <form (ngSubmit)="nuevoProducto( f )" #f="ngForm">
 
         <div class="modal-dialog">
@@ -12,7 +16,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="container md-5">
-                        <!-- <form (ngSubmit)="nuevoProducto( f )" #f="ngForm"> -->
                         <div class="form-group">
                             <label for="nombreProducto">Nombre del producto <span class="text-danger">*</span></label>
                             <input type="text" [(ngModel)]="producto.nombre" class="form-control" id="nombreProducto" name="nombreProducto" required minlength="3">
@@ -42,15 +45,17 @@
                                         <span class="input-group-text">€</span>
                                     </div>
                                 </div>
-                                <span *ngIf="f.submitted && f.controls['precioProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio</span>
+                                <span *ngIf="f.submitted && f.controls['precioProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio, mayor que 0</span>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="unidadProducto">Unidades <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" step="1" class="form-control" id="unidadProducto" name="unidadProducto" [(ngModel)]="producto.unidad" required>
+                                </div>
+                                <span *ngIf="f.submitted && f.controls['unidadProducto'].errors" class="text-danger animated fadeIn">Campo obligatorio, mayor que 0</span>
                             </div>
                         </div>
-                        <!-- <button type="submit" class="btn btn-primary">
-                        Crear producto
-                        </button> -->
-                        <hr>
-
-                        <!-- </form> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -60,4 +65,5 @@
             </div>
         </div>
     </form>
+
 </div>

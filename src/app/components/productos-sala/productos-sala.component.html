@@ -12,6 +12,23 @@
 </div>
 <div class="productos-body" id="productos-body">
     <!-- productos aqui -->
+    <table class="table table-hover table-sm ml-1">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Unidades</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of productos" class="puntero">
+                <td>{{product.nombre}}</td>
+                <td>{{product.unidad}} unds</td>
+                <td><span class="badge badge-pill badge-primary">{{product.precio |  number : '1.2-2'}} €</span></td>
+            </tr>
+        </tbody>
+
+    </table>
 </div>
 <div class="productos-footer">
     <hr>
@@ -23,7 +40,7 @@
         </div>
         <div class="total">
             <strong>Total</strong>
-            <span class="badge badge-pill badge-primary ml-1">100 €</span>
+            <span class="badge badge-pill badge-primary ml-1">{{total |  number : '1.2-2'}} €</span>
         </div>
     </div>
 </div>

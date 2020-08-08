@@ -267,6 +267,22 @@ borrarSala(idSala: string, usuarios: string[]) {
   });
   return this.promesas(null);
 }
+// ----------------------------------------------------
+añadirProductoSala(idSala: string, idProducto: string){
+  this.afs.collection('salas').doc(idSala).update({
+    productos : FieldValue.arrayUnion(idProducto)
+  }).then( () => {
+    console.log('Producto añadido a sala');
+  }).catch( e => {
+    console.log('[Añadir producto en sala] Falló la operacion', e);
+    const error = {
+      error: true,
+      msg: e
+    };
+    return this.promesas(error);
+  });
+  return this.promesas(null);
+}
 
 // ----------------------------------------------------
   private promesas(error) {

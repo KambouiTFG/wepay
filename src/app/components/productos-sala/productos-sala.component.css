@@ -43,6 +43,10 @@
     cursor: pointer;
 }
 
+.puntero {
+    cursor: pointer;
+}
+
 .derecha {
     margin-left: auto;
 }
