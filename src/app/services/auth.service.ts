@@ -56,7 +56,7 @@ export class AuthService {
           email: resp.user.email,
           nombre: resp.user.displayName,
           google: true,
-          img: resp.user.photoURL,
+          img: '',
           creado: new Date().getTime(),
           cambioNombre: new Date().getTime()
         }

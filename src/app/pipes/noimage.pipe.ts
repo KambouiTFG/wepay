@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NoimagePipe implements PipeTransform {
 
   transform( images: string): string {
-    if ( !images ){
+    if ( !images ) {
       return 'assets/img/noimage.png';
     }
     if ( images.length > 0 ) {
