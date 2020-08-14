@@ -5,6 +5,8 @@ import { SalaModel } from '../models/sala.model';
 import * as firebase from 'firebase/app';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
+import { ProductoService } from './producto.service';
+import { ProductoSalaModel } from '../models/product-sala';
 import FieldValue = firebase.firestore.FieldValue;
 
 
@@ -17,7 +19,8 @@ export class SalaService {
 
   constructor(private afs: AngularFirestore,
               private auth: AuthService,
-              private _us: UserService) {
+              private _us: UserService,
+              private _pr: ProductoService) {
     this.uid = this.auth.userStatus;
   }
 
@@ -29,12 +32,14 @@ export class SalaService {
     return new Promise( (resolve, reject) => {
       this.afs.collection('salas').ref.where('code', '==', code).where('open', '==', true)
       .get().then( (r) => {
-        r.forEach( (rr) => {
+        r.forEach( (rr: any) => {
           resolve(rr.data());
           this.añadirUserSala(rr.id, this.uid).then( () => {
             this._us.añadirSalaUser(this.uid, rr.id).then( () => {
+              console.log('PRODUCTOS: ',rr.data().productos);
+              this._pr.añadirUserTodosProductos(rr.id, rr.data().productos, this.uid);
               resolve(rr.id);
-              return this.promesas2(rr.id);
+              //return this.promesas2(rr.id);
             }).catch( e => {
               reject(null);
             });
@@ -173,10 +178,10 @@ export class SalaService {
     return this.promesas(null);
   } */
 
-// arreglar esto
 
-  quitarUserSala(idSala: string, idUser: string) {
+  quitarUserSala(idSala: string, idUser: string, productos?: string[]) {
     this._us.borrarSalaUser(idUser, idSala).then( () => {
+      this._pr.quitarUserTodosProductos(idSala, productos, idUser);
       this.afs.collection('salas').doc(idSala).update({
         admins : FieldValue.arrayRemove(idUser),
         usuarios : FieldValue.arrayRemove(idUser)
@@ -268,13 +273,14 @@ borrarSala(idSala: string, usuarios: string[]) {
   return this.promesas(null);
 }
 // ----------------------------------------------------
-añadirProductoSala(idSala: string, idProducto: string){
-  this.afs.collection('salas').doc(idSala).update({
-    productos : FieldValue.arrayUnion(idProducto)
-  }).then( () => {
-    console.log('Producto añadido a sala');
+añadirProductoSala(idSala: string, producto: ProductoSalaModel){
+  this._pr.añadirProducto(idSala, producto).then( (r) => {
+    this.afs.collection('salas').doc(idSala).update({
+      productos : FieldValue.arrayUnion(r.id)
+    }).then( () => {
+      console.log('Producto añadido a sala');
+    });
   }).catch( e => {
-    console.log('[Añadir producto en sala] Falló la operacion', e);
     const error = {
       error: true,
       msg: e
@@ -283,6 +289,27 @@ añadirProductoSala(idSala: string, idProducto: string){
   });
   return this.promesas(null);
 }
+
+quitarProductoSala(idSala: string, idProducto: string){
+  this._pr.quitarProducto(idSala, idProducto).then( () => {
+    this.afs.collection('salas').doc(idSala).update({
+      productos : FieldValue.arrayRemove(idProducto)
+    }).then( () => {
+      console.log('Producto eliminado de la sala');
+    })
+  }).catch( e => {
+    const error = {
+      error: true,
+      msg: e
+    };
+    return this.promesas(error);
+  });
+  return this.promesas(null);
+}
+// ----------------------------------------------------
+getProductsList(idSala: string) { //idField: 'propertyId' 
+    
+  }
 
 // ----------------------------------------------------
   private promesas(error) {

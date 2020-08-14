@@ -104,7 +104,7 @@ export class BodySalaComponent implements OnInit, OnDestroy {
           text: 'abandonando sala...'
         });
         Swal.showLoading();
-        this._sala.quitarUserSala(this.idSala, this.myUid).then( () => {
+        this._sala.quitarUserSala(this.idSala, this.myUid, this.infoSala.productos).then( () => {
           setTimeout(() => {
             Swal.close();
           }, 800);

@@ -2,12 +2,11 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-import { ProductoService } from '../../services/producto.service';
 import { ProductoSalaModel } from '../../models/product-sala';
 import { SalaModel } from '../../models/sala.model';
 
 import $ from "jquery";
-import { Subscription } from 'rxjs';
+import { SalaService } from '../../services/sala.service';
 
 
 
@@ -22,7 +21,7 @@ export class NewproductComponent implements OnInit, OnDestroy {
   @Input() idSala: string;
   @Input() infoSala: SalaModel;
 
-  constructor(private _ps: ProductoService) {}
+  constructor(private _sala: SalaService) {}
   ngOnDestroy(): void {
     console.log('adiooooos');
   }
@@ -48,7 +47,7 @@ export class NewproductComponent implements OnInit, OnDestroy {
     });
     Swal.showLoading();
     this.producto.participantes = this.infoSala.usuarios;
-    this._ps.añadirProducto(this.idSala, this.producto).then( () => {
+    this._sala.añadirProductoSala(this.idSala, this.producto).then( () => {
       Swal.fire({
         icon: 'success',
         title: 'Producto añadido a la sala'

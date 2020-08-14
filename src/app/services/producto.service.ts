@@ -3,6 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ProductoModel } from '../models/producto.model';
 import { ProductoSalaModel } from '../models/product-sala';
 import { SalaService } from './sala.service';
+
+import * as firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
 
 
@@ -11,35 +13,41 @@ import FieldValue = firebase.firestore.FieldValue;
   providedIn: 'root'
 })
 export class ProductoService {
-  
-
-  constructor( private afs: AngularFirestore, private _sala: SalaService ) { }
-
-  /* public get products(): Observable<any> {
-    return this.afs.collection('products').valueChanges({ idField: 'propertyId' });
-  } */
-  
-  añadirProducto(idSala: string, producto: ProductoSalaModel) {
-    const newP = {...producto};
-    this.afs.collection('salas').doc(idSala).collection('productos')
-    .add(newP).then( (r) => {
-      //console.log('Producto añadido en sala, ', r.id);
-      this._sala.añadirProductoSala(idSala, r.id);
-    }).catch( e => {
-      const error = {
-        state: true,
-        msg: e
-      };
-      return this.promesas(error);
-    });
-    return this.promesas(null);
-  }
+  constructor(private afs: AngularFirestore/* ,
+              private _sala: SalaService */ ) { }
 
   getProductos(idSala: string) {
     return this.afs.collection('salas').doc(idSala).collection('productos')
     .valueChanges('idField: propertyId');
   }
+  /* public get products(): Observable<any> {
+    return this.afs.collection('products').valueChanges({ idField: 'propertyId' });
+  } */
+  // hecho
+  // Se añade producto en sala
+  añadirProducto(idSala: string, producto: ProductoSalaModel) {
+    const newP = {...producto};
+    return this.afs.collection('salas').doc(idSala).collection('productos')
+    .add(newP);
+    /* .then( (r) => {
+      //console.log('Producto añadido en sala, ', r.id);
+      //this._sala.añadirProductoSala(idSala, r.id);
+      return this.promesas2(r.id);
+    }).catch( () => {
+      return this.promesas2(null);
+    }); */
+    // return this.promesas(null);
+  }
+  // Hecho
+  // Se quita producto de la sala
+  quitarProducto(idSala: string, idProducto: string) {
+    return this.afs.collection('salas').doc(idSala).collection('productos').doc(idProducto).delete()
+  }
+  // ===============================================
+  // TO DO
 
+  // Hecho
+  // Cuando se une un nuevo usuario en sala
   añadirUserTodosProductos(idsala: string, productos: string[], idUser: string) {
     productos.forEach(p => {
       this.afs.collection('salas').doc(idsala)
@@ -52,7 +60,8 @@ export class ProductoService {
       });
     });
   }
-
+  // Hecho
+  // Cuando un usuario abandona la sala o es echado
   quitarUserTodosProductos(idsala: string, productos: string[], idUser: string) {
     productos.forEach(p => {
       this.afs.collection('salas').doc(idsala)
@@ -67,6 +76,7 @@ export class ProductoService {
   }
 
 
+  // Usuario participa en un producto
   añadirUserProducto(idsala: string, producto: string, idUser: string) {
     this.afs.collection('salas').doc(idsala)
     .collection('productos').doc(producto).update({
@@ -78,6 +88,7 @@ export class ProductoService {
     });
   }
 
+  // Usuario deja de participar en un producto
   quitarUserProducto(idsala: string, producto: string, idUser: string) {
     this.afs.collection('salas').doc(idsala)
     .collection('productos').doc(producto).update({
@@ -183,6 +194,18 @@ export class ProductoService {
       } else {
         // console.log('error promise');
         reject(error.msg);
+      }
+    });
+  }
+
+  private promesas2(id) {
+    return new Promise((resolve, reject) => {
+      if(id === null){
+        // console.log('exito promise');
+        reject('fracaso');
+      } else {
+        // console.log('error promise');
+        resolve(id);
       }
     });
   }
