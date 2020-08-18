@@ -18,6 +18,7 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
   productos: ProductoSalaModel[];
   hayInfo = false;
   total: number;
+  miPart: number;
 
   constructor(private _sala: SalaService, private _ps: ProductoService) { }
 
@@ -28,6 +29,7 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
       this.productos = r;
       this.hayInfo = true;
       this.getTotal();
+      this.miParticipacion();
     });
   }
 
@@ -36,12 +38,32 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
     this.hayInfo = false;
   }
 
+  miParticipacion() {
+    let monton = 0;
+    this.productos.filter(p => p.participantes.includes(this._sala.uid))
+    .forEach( p => {
+      monton += (p.precio * p.unidad) / p.participantes.length;
+    });
+    this.miPart = monton;
+  }
+
+  gerParticipacion(idUser: string): number {
+    let monton = 0;
+    this.productos.filter(p => p.participantes.includes(idUser))
+    .forEach( p => {
+      monton += (p.precio * p.unidad) / p.participantes.length;
+    });
+    return monton;
+  }
+
   private getTotal() {
     this.total = 0;
     this.productos.forEach( p => {
       this.total += p.precio * p.unidad;
     });
   }
+
+  
 
 
 

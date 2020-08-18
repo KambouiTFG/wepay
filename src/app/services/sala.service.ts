@@ -14,7 +14,7 @@ import FieldValue = firebase.firestore.FieldValue;
   providedIn: 'root'
 })
 export class SalaService {
-  private uid: string;
+  uid: string;
   private listaSalas: SalaModel[];
 
   constructor(private afs: AngularFirestore,
