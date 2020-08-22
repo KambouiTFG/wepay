@@ -48,6 +48,7 @@ import { ConfigSalaComponent } from './components/config-sala/config-sala.compon
 import { CargaImagenComponent } from './components/carga-imagen/carga-imagen.component';
 import { GestionParticipantesComponent } from './components/gestion-participantes/gestion-participantes.component';
 import { ProductosSalaComponent } from './components/productos-sala/productos-sala.component';
+import { ProductInfoComponent } from './components/product-info/product-info.component';
 
 
 
@@ -75,7 +76,8 @@ import { ProductosSalaComponent } from './components/productos-sala/productos-sa
     ConfigSalaComponent,
     CargaImagenComponent,
     GestionParticipantesComponent,
-    ProductosSalaComponent
+    ProductosSalaComponent,
+    ProductInfoComponent
     ],
   imports: [
     BrowserModule,

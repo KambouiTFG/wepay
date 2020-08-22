@@ -1,0 +1,16 @@
+#particip::-webkit-scrollbar {
+    border-radius: 10px;
+}
+
+#particip::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #4080FF;
+    border: 1px solid #aaa;
+}
+
+.particip {
+    width: 98%;
+    height: 90px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

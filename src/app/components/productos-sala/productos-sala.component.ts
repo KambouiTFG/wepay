@@ -20,6 +20,9 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
   total: number;
   miPart: number;
 
+
+  infoProduct: ProductoSalaModel = null;
+
   constructor(private _sala: SalaService, private _ps: ProductoService) { }
 
   
@@ -55,6 +58,11 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
     });
     return monton;
   }
+
+  infoProducto(p: ProductoSalaModel) {
+    this.infoProduct = p;
+  }
+
 
   private getTotal() {
     this.total = 0;
