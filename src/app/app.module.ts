@@ -49,6 +49,7 @@ import { CargaImagenComponent } from './components/carga-imagen/carga-imagen.com
 import { GestionParticipantesComponent } from './components/gestion-participantes/gestion-participantes.component';
 import { ProductosSalaComponent } from './components/productos-sala/productos-sala.component';
 import { ProductInfoComponent } from './components/product-info/product-info.component';
+import { ParticipantesPipe } from './pipes/participantes.pipe';
 
 
 
@@ -77,7 +78,8 @@ import { ProductInfoComponent } from './components/product-info/product-info.com
     CargaImagenComponent,
     GestionParticipantesComponent,
     ProductosSalaComponent,
-    ProductInfoComponent
+    ProductInfoComponent,
+    ParticipantesPipe
     ],
   imports: [
     BrowserModule,
