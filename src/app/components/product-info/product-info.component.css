@@ -19,3 +19,7 @@
     margin-right: auto;
     background-color: lawngreen;
 }
+
+.puntero {
+    cursor: pointer;
+}

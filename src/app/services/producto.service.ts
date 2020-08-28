@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ProductoModel } from '../models/producto.model';
 import { ProductoSalaModel } from '../models/product-sala';
-import { SalaService } from './sala.service';
 
 import * as firebase from 'firebase/app';
 import FieldValue = firebase.firestore.FieldValue;
@@ -18,7 +17,7 @@ export class ProductoService {
 
   getProductos(idSala: string) {
     return this.afs.collection('salas').doc(idSala).collection('productos')
-    .valueChanges('idField: propertyId');
+    .valueChanges({ idField: 'propertyId' });
   }
   /* public get products(): Observable<any> {
     return this.afs.collection('products').valueChanges({ idField: 'propertyId' });
@@ -41,7 +40,7 @@ export class ProductoService {
   // Hecho
   // Se quita producto de la sala
   quitarProducto(idSala: string, idProducto: string) {
-    return this.afs.collection('salas').doc(idSala).collection('productos').doc(idProducto).delete()
+    return this.afs.collection('salas').doc(idSala).collection('productos').doc(idProducto).delete();
   }
   // ===============================================
   // TO DO
@@ -98,6 +97,24 @@ export class ProductoService {
     }).catch( e => {
       console.log('falló la operación');
     });
+  }
+
+
+  // Actualizar producto
+  actualizarProducto(idSala: string, idProducto: string, producto: ProductoSalaModel) {
+    this.afs.collection('salas').doc(idSala)
+    .collection('productos').doc(idProducto).update(producto)
+    .then( () => {
+      console.log('añadido');
+    })
+    .catch( (e) => {
+      const error = {
+        state: true,
+        msg: e
+      };
+      return this.promesas(error);
+    });
+    return this.promesas(null);
   }
 
 

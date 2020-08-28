@@ -16,7 +16,7 @@
 <div class="productos-body" id="productos-body">
     <!-- productos aqui -->
     <table class="table table-hover table-sm ml-1">
-        <thead>
+        <thead class="thead-dark">
             <tr class="titable">
                 <th>Producto</th>
                 <th>Unidades</th>
@@ -54,4 +54,4 @@
 
 <!-- MODAL "#infoProducto"-->
 
-<app-product-info [producto]="infoProduct" [AllParticipantes]="infoSala.usuarios"></app-product-info>
+<app-product-info [producto]="infoProduct" [AllParticipantes]="infoSala.usuarios" [idSala]="idSala"></app-product-info>

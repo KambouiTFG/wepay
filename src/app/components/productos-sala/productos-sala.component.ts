@@ -15,7 +15,7 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
   @Input() idSala;
   @Input() infoSala: SalaModel;
   subs1: Subscription;
-  productos: ProductoSalaModel[];
+  productos;
   hayInfo = false;
   total: number;
   miPart: number;
@@ -28,7 +28,7 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.subs1 = this._ps.getProductos(this.idSala).subscribe( (r: ProductoSalaModel[]) => {
+    this.subs1 = this._ps.getProductos(this.idSala).subscribe( (r) => {
       this.productos = r;
       this.hayInfo = true;
       this.getTotal();

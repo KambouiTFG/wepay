@@ -129,9 +129,10 @@
                     <div class="particip" id="particip">
                         <div class="row">
                             <div class="col">
-                                <table class="table table-sm table-striped">
+                                <span *ngIf="0 >= producto2.participantes.length" class="text-danger animated fadeIn">Debe haber al menos un participante</span>
+                                <table class="table table-sm table-striped table-hover">
                                     <tbody>
-                                        <tr *ngFor="let user of producto2.participantes">
+                                        <tr *ngFor="let user of producto2.participantes" (click)="quitarPart(user)">
                                             <td><small>{{getNombre(user)}}</small></td>
                                             <td>
                                                 <small><span class="badge badge-danger badge-pill puntero">
@@ -143,9 +144,9 @@
                                 </table>
                             </div>
                             <div class="col">
-                                <table class="table table-sm table-striped">
+                                <table class="table table-sm table-striped table-hover">
                                     <tbody>
-                                        <tr *ngFor="let user of AllParticipantes | participantes:producto2.participantes">
+                                        <tr *ngFor="let user of AllParticipantes | participantes:producto2.participantes" (click)="addPart(user)">
                                             <td><small>{{getNombre(user)}}</small></td>
                                             <td>
                                                 <small><span class="badge badge-primary badge-pill puntero">
