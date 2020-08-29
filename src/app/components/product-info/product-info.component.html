@@ -5,14 +5,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Información de producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="cerrarMod">
                     <span aria-hidden="true" class="text-danger">&times;</span>
                 </button>
             </div>
             <div class="modal-body" *ngIf="producto !== null || undefined">
-                <div class="text-right">
+                <div class="text-right" *ngIf="admin">
                     <button class="btn btn-sm btn-warning badge-pill" (click)="editar()">
                         <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn btn-sm btn-danger badge-pill mx-1" (click)="borrar()">
+                        <i class="fas fa-trash"></i> Borrar
                     </button>
                 </div>
                 <div class="container md-5">
@@ -146,7 +149,7 @@
                             <div class="col">
                                 <table class="table table-sm table-striped table-hover">
                                     <tbody>
-                                        <tr *ngFor="let user of AllParticipantes | participantes:producto2.participantes" (click)="addPart(user)">
+                                        <tr *ngFor="let user of producto2.participantes | participantes:AllParticipantes" (click)="addPart(user)">
                                             <td><small>{{getNombre(user)}}</small></td>
                                             <td>
                                                 <small><span class="badge badge-primary badge-pill puntero">

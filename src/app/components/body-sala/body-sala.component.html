@@ -34,7 +34,7 @@
             <app-chat [idSala]="idSala"></app-chat>
         </div>
         <div class="productos m-2">
-            <app-productos-sala [idSala]="idSala" [infoSala]="infoSala"></app-productos-sala>
+            <app-productos-sala [idSala]="idSala" [infoSala]="infoSala" [admin]="isAdmin(myUid)"></app-productos-sala>
         </div>
     </div>
     <div class="row" *ngIf="divConfig">

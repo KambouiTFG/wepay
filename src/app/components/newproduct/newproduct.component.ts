@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { ProductoSalaModel } from '../../models/product-sala';
 import { SalaModel } from '../../models/sala.model';
 
-import $ from "jquery";
+import * as $ from 'jquery';
 import { SalaService } from '../../services/sala.service';
 
 

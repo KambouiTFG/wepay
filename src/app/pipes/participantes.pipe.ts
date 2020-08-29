@@ -1,11 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'participantes'
+  name: 'participantes',
+  pure: false
 })
 export class ParticipantesPipe implements PipeTransform {
 
-  transform(allParticipantes: string[], lista: string[]): any {
+  transform(lista: string[], allParticipantes: string[]): any {
+    console.log('entramos al pipe');
     let res: string [] = [];
 
     allParticipantes.forEach(user => {
@@ -13,11 +15,6 @@ export class ParticipantesPipe implements PipeTransform {
         res.push(user);
       }
     });
-
-    console.log('todos', allParticipantes);
-    console.log('lsta productos', lista);
-    console.log('res', res);
-
     return res;
   }
 

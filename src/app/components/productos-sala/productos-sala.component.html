@@ -38,7 +38,7 @@
 <div class="productos-footer">
     <hr>
     <div class="row mb-1">
-        <div class="botones">
+        <div class="botones" *ngIf="admin">
             <button type="button" class="btn btn-info badge-pill btn-sm" data-toggle="modal" data-target="#añadirProducto">
                 <i class="fas fa-cart-plus"></i> Añadir
             </button>
@@ -54,4 +54,4 @@
 
 <!-- MODAL "#infoProducto"-->
 
-<app-product-info [producto]="infoProduct" [AllParticipantes]="infoSala.usuarios" [idSala]="idSala"></app-product-info>
+<app-product-info [producto]="infoProduct" [AllParticipantes]="infoSala.usuarios" [idSala]="idSala" [admin]="admin"></app-product-info>

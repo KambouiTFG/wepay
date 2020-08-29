@@ -14,6 +14,7 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
 
   @Input() idSala;
   @Input() infoSala: SalaModel;
+  @Input() admin: boolean;
   subs1: Subscription;
   productos;
   hayInfo = false;

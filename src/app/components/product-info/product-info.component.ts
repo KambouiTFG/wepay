@@ -4,6 +4,8 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ProductoService } from '../../services/producto.service';
 import { ProductoSalaModel } from 'src/app/models/product-sala';
+import * as $ from 'jquery';
+import { SalaService } from '../../services/sala.service';
 
 @Component({
   selector: 'app-product-info',
@@ -15,11 +17,13 @@ export class ProductInfoComponent implements OnInit {
   @Input() producto;
   @Input() AllParticipantes;
   @Input() idSala;
-  producto2: ProductoSalaModel;
+  @Input() admin;
+  producto2;
   edit = false;
 
   constructor(private _us: UserService,
-              private _p: ProductoService) { }
+              private _p: ProductoService,
+              private _sala: SalaService) { }
 
   cerrar() {
     this.producto2 = null;
@@ -52,11 +56,18 @@ export class ProductInfoComponent implements OnInit {
 
     this.editarProducto(this.producto2);
     this.cerrar();
+    setTimeout(() => {
+      $('#cerrarMod').click();
+    }, 200);
+    
   }
 
 
   editar() {
-    this.producto2 = {...this.producto};
+    if(! this.admin) {
+      return;
+    }
+    this.producto2 = JSON.parse(JSON.stringify(this.producto));
     this.edit = true;
   }
 
@@ -83,11 +94,55 @@ export class ProductInfoComponent implements OnInit {
   }
 
   addPart(uid: string) {
-    // this.producto2.participantes.unshift(uid);
+    //this.AllParticipantes.splice(this.AllParticipantes.indexOf(uid), 1);
+    this.producto2.participantes.unshift(uid);
+    
   }
 
   quitarPart(uid: string) {
-    // this.producto2.participantes.indexOf(uid);
-    // eliminar
+    //this.AllParticipantes.unshift(uid);
+    this.producto2.participantes.splice(this.producto2.participantes.indexOf(uid), 1);
+  }
+
+  borrar() {
+    Swal.fire({
+      title: `¿Seguro que quiere borrar el producto?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          allowOutsideClick: false,
+          icon: 'info',
+          text: 'Borrando producto...'
+        });
+        Swal.showLoading();
+
+        this._sala.quitarProductoSala(this.idSala, this.producto.propertyId)
+        .then( () => {
+          this.swalClose();
+        }).catch( e => {
+          this.swalError(e);
+        });
+      }
+    });
+  }
+
+  private swalClose() {
+    setTimeout( () => {
+      Swal.close();
+      $('#cerrarMod').click();
+    }, 300);
+  }
+
+  private swalError(error: any) {
+    Swal.fire({
+      title: 'Falló la operación',
+      icon: 'warning',
+      text: error
+    });
   }
 }
