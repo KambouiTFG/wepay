@@ -24,10 +24,15 @@
     </div>
     <div class="row sala-body" *ngIf="!divConfig">
         <div class="participantes m-2" id="participantes">
-            <h3 class="m-1">Participantes</h3>
+            <div class="tittle">
+                <h3 class="m-1 tittle">Participantes</h3>
+            </div>
+            <!-- <div class="text-center tittle">
+                <strong>Participantes</strong>
+            </div> -->
             <hr>
             <div *ngFor="let iduser of infoSala.usuarios">
-                <app-integrantes [idUser]="iduser" [rol]="rolSala(iduser)"></app-integrantes>
+                <app-integrantes [idUser]="iduser" [rol]="rolSala(iduser)" [myUid]="myUid"></app-integrantes>
             </div>
         </div>
         <div class="chat m-2">

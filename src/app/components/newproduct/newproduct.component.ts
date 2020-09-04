@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
@@ -15,16 +15,13 @@ import { SalaService } from '../../services/sala.service';
   templateUrl: './newproduct.component.html',
   styleUrls: ['./newproduct.component.css']
 })
-export class NewproductComponent implements OnInit, OnDestroy {
+export class NewproductComponent implements OnInit {
   producto: ProductoSalaModel;
 
   @Input() idSala: string;
   @Input() infoSala: SalaModel;
 
   constructor(private _sala: SalaService) {}
-  ngOnDestroy(): void {
-    console.log('adiooooos');
-  }
 
   ngOnInit() {
     this.producto = new ProductoSalaModel();

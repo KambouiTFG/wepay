@@ -68,7 +68,9 @@ export class ProductosSalaComponent implements OnInit, OnDestroy {
   private getTotal() {
     this.total = 0;
     this.productos.forEach( p => {
-      this.total += p.precio * p.unidad;
+      if (p.participantes.length > 0) {
+        this.total += p.precio * p.unidad;
+      }
     });
   }
 

@@ -80,7 +80,9 @@ export class ProductInfoComponent implements OnInit {
       text: 'Añadiendo producto...'
     });
     Swal.showLoading();
-    this._p.actualizarProducto(this.idSala, p.propertyId, p).then( () => {
+    const pid = p.propertyId;
+    delete p.propertyId;
+    this._p.actualizarProducto(this.idSala, pid, p).then( () => {
       Swal.fire({
         icon: 'success',
         title: 'Producto actualizado'

@@ -15,6 +15,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   loading = true;
   cambioNombre = false;
   puedeCambiar;
+  myuid = this._auth.userStatus;
 
   constructor(private _us: UserService,
               private _auth: AuthService) {
@@ -23,19 +24,13 @@ export class PerfilComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.misDatosSub = this._us.getUserByUID(this._auth.userStatus).subscribe((data: UsuarioModel) => {
+    this.misDatosSub = this._us.getUserByUID(this.myuid).subscribe((data: UsuarioModel) => {
       this.misDatos = data;
       console.log('Mis datos', this.misDatos);
       this.loading = false;
       this.puedeCambiar = this._us.compruebaFecha(this.misDatos.cambioNombre);
     });
-
-
-
-
   }
-
-  
 
   ngOnDestroy(): void {
     this.unSubscribe();

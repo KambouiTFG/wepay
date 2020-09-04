@@ -7,7 +7,7 @@
 </div> -->
 
 <div class="productos-head">
-    <h3 class="m-1">Productos</h3>
+    <h3 class="m-1 tittle">Productos</h3>
     <hr>
 </div>
 <div class="mb-1 text-center">
@@ -29,7 +29,7 @@
                 <td><small>{{product.nombre}}</small></td>
                 <td><small>{{product.unidad}} unds</small></td>
                 <td><small><span class="badge badge-pill badge-primary">{{product.precio |  number : '1.2-2'}} €</span></small></td>
-                <td><small><span class="badge badge-pill badge-info">{{product.participantes.length}} <i class="fas fa-users"></i></span></small></td>
+                <td><small><span class="badge badge-pill badge-info" [ngClass]="{'badge-danger': product.participantes.length === 0}">{{product.participantes.length}} <i class="fas fa-users"></i></span></small></td>
             </tr>
         </tbody>
 

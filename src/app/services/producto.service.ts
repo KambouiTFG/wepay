@@ -102,6 +102,7 @@ export class ProductoService {
 
   // Actualizar producto
   actualizarProducto(idSala: string, idProducto: string, producto: ProductoSalaModel) {
+    console.log('EDITANDO', producto);
     this.afs.collection('salas').doc(idSala)
     .collection('productos').doc(idProducto).update(producto)
     .then( () => {

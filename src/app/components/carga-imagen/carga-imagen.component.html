@@ -1,6 +1,8 @@
 <h5><small>Cambiar imagen de sala:</small></h5>
-<input type="file" accept="image/*" id="inputGroupFile04 " class="inputfile" (change)="uploadFile($event)">
-<label class="btn btn-success" for="inputGroupFile04 "><span class="badge badge-pill badge-primary" *ngIf="hayArchivo">(1)</span> Escoger imagen    </label>
+<div class="text-center">
+    <input type="file" accept="image/*" id="inputGroupFile04 " class="inputfile" (change)="uploadFile($event)">
+    <label class="btn btn-success" for="inputGroupFile04 "><span class="badge badge-pill badge-primary" *ngIf="hayArchivo">(1)</span> Escoger imagen</label>
+</div>
 <div *ngIf="!puede">
     <small class="text-danger">El archivo debe ser una imagen e inferior a 1 MB</small>
 </div>

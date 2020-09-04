@@ -9,36 +9,38 @@
     </div>
     <hr>
     <div class="m-2">
-        <div class="code">
-            <h5><small>Código sala:</small></h5>
-            <div class="input-group">
-                <input type="text" class="form-control" [value]="infoSala.code" maxlenght="6" disabled>
-                <div class="input-group-append">
-                    <button class="btn btn-success btn-sm" *ngIf="!infoSala.open" (click)="codigoSala(true)">
-                        Activar
-                    </button>
-                    <button class="btn btn-danger btn-sm" *ngIf="infoSala.open" (click)="codigoSala(false)">
-                        Desactivar
-                    </button>
+        <div class="row">
+            <div class="name">
+                <h5><small>Nombre de sala:</small></h5>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="nombre" [disabled]="!cambioNombre" maxlength="16">
+                    <div class="input-group-append">
+                        <span class="input-group-text">
+                            <button class="btn badge badge-warning" (click)="cambiarNombre()" *ngIf="!cambioNombre">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn badge badge-primary" (click)="cambiarNombre(true)" *ngIf="cambioNombre">
+                                <i class="far fa-save"></i> Guardar
+                            </button>
+                            <button class="btn badge badge-danger ml-1" (click)="cambiarNombre(false)" *ngIf="cambioNombre">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="name">
-            <h5><small>Nombre de sala:</small></h5>
-            <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="nombre" [disabled]="!cambioNombre" maxlength="16">
-                <div class="input-group-append">
-                    <span class="input-group-text">
-                        <button class="btn badge badge-warning" (click)="cambiarNombre()" *ngIf="!cambioNombre">
-                            <i class="fas fa-edit"></i> Editar
+            <div class="code">
+                <h5><small>Código sala:</small></h5>
+                <div class="input-group">
+                    <input type="text" class="form-control" [value]="infoSala.code" maxlenght="6" disabled>
+                    <div class="input-group-append">
+                        <button class="btn btn-success btn-sm" *ngIf="!infoSala.open" (click)="codigoSala(true)">
+                            Activar
                         </button>
-                        <button class="btn badge badge-primary" (click)="cambiarNombre(true)" *ngIf="cambioNombre">
-                            <i class="far fa-save"></i> Guardar
+                        <button class="btn btn-danger btn-sm" *ngIf="infoSala.open" (click)="codigoSala(false)">
+                            Desactivar
                         </button>
-                        <button class="btn badge badge-danger ml-1" (click)="cambiarNombre(false)" *ngIf="cambioNombre">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>

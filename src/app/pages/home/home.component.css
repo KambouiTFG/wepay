@@ -1,0 +1,13 @@
+.btns {
+    margin-left: auto;
+    margin-right: 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.sala-footer {
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+    background-color: #4080FF;
+    min-width: 320px;
+}

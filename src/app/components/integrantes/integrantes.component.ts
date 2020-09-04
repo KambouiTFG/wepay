@@ -10,6 +10,7 @@ export class IntegrantesComponent implements OnInit {
 
   @Input() idUser;
   @Input() rol;
+  @Input() myUid;
   infoUser;
 
   constructor(private _us: UserService ) {
